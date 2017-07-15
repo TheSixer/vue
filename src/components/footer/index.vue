@@ -20,6 +20,7 @@
     flex-direction: column;
     width: 20%;
     height: 80 / @pxtorem;
+    text-align: center;
     img {
       width: auto;
       height: 42 / @pxtorem;
