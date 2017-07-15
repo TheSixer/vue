@@ -40,6 +40,8 @@
     span {
       position: absolute;
       bottom: 2.5 / @pxtorem;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
   .tab.active {
