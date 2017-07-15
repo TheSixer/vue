@@ -158,12 +158,12 @@
       </div>
     </div>
 
-    <Menu></Menu>
+    <Guide></Guide>
   </div>
 </template>
 
 <script>
-import Menu from '@/components/menu/menu'
+import Guide from '@/components/footer/index'
 export default {
   data () {
     return {
@@ -171,7 +171,7 @@ export default {
     }
   },
   components: {
-    Menu
+    Guide
   }
 }
 </script>

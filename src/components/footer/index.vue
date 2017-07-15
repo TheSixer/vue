@@ -32,7 +32,7 @@
   }
   .tab.vip {
     img {
-      position: absolute;
+      position: relative;
       width: 89 / @pxtorem;
       height: 89 / @pxtorem;
       top: -(45 / @pxtorem);
