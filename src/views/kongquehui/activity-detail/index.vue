@@ -297,15 +297,15 @@
         <Tabs value="detail">
           <Tab-pane label="活动详情" name="detail">
             <div class="actImg">
-              <img class="act" src="../../../assets/images/home-bg.png">
+              <img class="act" :src="baseImgUrl + activity.coverImg">
               <img class="status" src="../../../assets/images/underway.png">
             </div>
 
             <div class="actInfo">
-              <p>活动名称活动名称活动名称</p>
+              <p>{{ activity.name }}</p>
               <div class="date">
                 <img src="../../../assets/images/time.png">
-                <span>2017/6/20~2017/7/19</span>
+                <span>{{ activity.beginDate }}~{{ activity.endDate }}</span>
               </div>
               <div class="address">
                 <img src="../../../assets/images/position.png">
@@ -362,17 +362,17 @@
         </Tabs>
       </div>
 
-      <div class="moreAct">
+      <div class="moreAct" v-if="activityMoodList.length">
         <div class="moreTitle">
           <span>您可能感兴趣的活动</span>
         </div>
 
         <ul class="items">
-          <li v-for="item of activities" v-bind:key="item.name">
+          <li v-for="item in activityMoodList" v-bind:key="item.id">
             <div class="item">
-              <router-link to="">
+              <router-link :to="'/activity-detail/' + item.id" key="item.id">
                 <div class="pic">
-                  <img class="activityBg" src="../../../assets/images/home-bg.png">
+                  <img class="activityBg" :src="baseImgUrl + item.coverImg">
                   <template v-if="item.status">
                     <img class="status" src="../../../assets/images/underway.png">
                   </template>
@@ -411,37 +411,44 @@
 
 <script>
 import Heade from '@/components/wordHeader/wordHeader'
+import config from '@/config/config'
+import { activityDetailApi } from '@/api/service'
 export default {
   data () {
     return {
-      activities: [
-        {
-          name: '活动1活动1活动1活动1',
-          status: true,
-          count: 21230,
-          startTime: '2017/7/5',
-          endTime: '2017/9/4',
-          address: '上海市宝安区'
-        }, {
-          name: '活动2活动2活动2活动2活动2',
-          status: false,
-          count: 6456,
-          startTime: '2017/7/5',
-          endTime: '2017/9/4',
-          address: '上海市静安区'
-        }, {
-          name: '活动3活动3活动3活动3活动3',
-          status: true,
-          count: 2324,
-          startTime: '2017/7/5',
-          endTime: '2017/9/4',
-          address: '上海市杨浦区'
-        }
-      ]
+      activityId: this.$route.params.id,
+      baseImgUrl: config.qiniu.IMG_PATH,
+      activity: {
+        coverImg: ''
+      },
+      activityMember: [],
+      activityMoodList: []
     }
   },
   components: {
     Heade
+  },
+  created () {
+    this.initData()
+    console.log('1111')
+  },
+  computed: {
+
+  },
+  methods: {
+    async initData () {
+      await activityDetailApi({
+        activityId: this.activityId,
+        memberId: '001'
+      }).then(res => {
+        if (res.status === 200) {
+          console.log(res.data)
+          this.activity = res.data.activity
+          this.activityMember = res.data.activityMember
+          this.activityMoodList = res.data.activityMoodList
+        }
+      })
+    }
   }
 }
 </script>

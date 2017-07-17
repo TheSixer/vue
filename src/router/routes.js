@@ -3,11 +3,12 @@ import App from '@/App'
 const home = r => require.ensure([], () => r(require('@/views/home/index')), 'home')
 const kongquehui = r => require.ensure([], () => r(require('@/views/kongquehui/index')), 'kongquehui')
 const activityDetail = r => require.ensure([], () => r(require('@/views/kongquehui/activity-detail/index')), 'activityDetail')
+const safeShop = r => require.ensure([], () => r(require('@/views/easyShop/index')), 'easyShop')
 const mine = r => require.ensure([], () => r(require('@/views/mine/index')), 'mine')
-const test = r => require.ensure([], () => r(require('@/views/kongquehui/test/index')), 'test')
+const commodityDetail = r => require.ensure([], () => r(require('@/views/easyShop/commodity-detail/index')), 'commodityDetail')
 
 export default [{
-  path: '/',
+  path: '',
   meta: {
     title: 'Index'
   },
@@ -16,19 +17,19 @@ export default [{
     path: '',
     component: home
   }, {
-    path: 'kongquehui',
+    path: '/kongquehui',
     component: kongquehui
   }, {
-    path: 'mine',
+    path: '/safeshop',
+    component: safeShop
+  }, {
+    path: '/mine',
     component: mine
   }, {
-    path: 'activity-detail',
+    path: '/activity-detail/:id',
     component: activityDetail
   }, {
-    path: 'test',
-    meta: {
-      title: 'Test'
-    },
-    component: test
+    path: '/commodity-detail/:id',
+    component: commodityDetail
   }]
 }]

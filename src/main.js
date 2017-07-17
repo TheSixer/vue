@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import iView from 'iview'
 import Vuex from 'vuex'
+import Moment from 'moment'
 import store from './store/'
 import App from './App'
 import router from './router'
@@ -18,6 +19,11 @@ Vue.use(iView)
 // Vue.use(Aleter)
 
 Vue.config.productionTip = false
+
+Vue.filter('moment', function (value, formatString) {
+  formatString = formatString || 'YYYY-MM-DD HH:mm:ss'
+  return Moment(value).format(formatString)
+})
 
 /* eslint-disable no-new */
 new Vue({

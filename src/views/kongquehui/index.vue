@@ -296,18 +296,18 @@
       <Tabs value="0" v-model="spec">
         <Tab-pane label="热门" name="0"></Tab-pane>
         <Tab-pane label="最新" name="1"></Tab-pane>
-        <template v-for="(item, index) in specList" v-key="item.id">
+        <!-- <template v-for="(item, index) in specList" :key="item.id">
           <Tab-pane v-bind:label="item.name" v-bind:name="item.id"></Tab-pane>
-        </template>
+        </template> -->
       </Tabs>
 
       <template v-if="activityList.length">
         <ul class="items">
           <li v-for="item in activityList" v-bind:key="item.name">
             <div class="item">
-              <router-link to="activity-detail">
+              <router-link :to="'activity-detail/' + item.id">
                 <div class="pic">
-                  <img class="activityBg" src="../../assets/images/home-bg.png">
+                  <img class="activityBg" :src="baseImgUrl + item.coverImg">
                   <template v-if="item.activityStatus === 0">
                     <img class="status" src="../../assets/images/unBegin.png">
                   </template>
@@ -348,7 +348,7 @@
       </template>
 
       <Select v-model="status">
-        <Option v-for="item in cityList" :value="item.value" :key="item">{{ item.label }}</Option>
+        <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
 
       <div class="rank-link">
