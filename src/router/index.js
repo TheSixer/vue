@@ -2,23 +2,35 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import iView from 'iview'
 import routes from './routes'
+import store from '@/store/index'
 import Util from '@/libs/util'
 
 Vue.use(Router)
 Vue.use(iView)
 
 const RouterConfig = {
-  mode: 'history',
+  // mode: 'history',
   routes
 }
 
 const router = new Router(RouterConfig)
 
 router.beforeEach((to, from, next) => {
-  iView.LoadingBar.start()
-  console.log(to, from)
-  Util.title(to.meta.title)
-  next()
+  if (to.matched.some(r => r.meta.requireAuth)) {
+    if (store.state.token) {
+      next()
+    } else {
+      next({
+        path: '/',
+        query: {redirect: to.fullPath}
+      })
+    }
+  } else {
+    iView.LoadingBar.start()
+    console.log(to, from)
+    Util.title(to.meta.title)
+    next()
+  }
 })
 
 router.afterEach(() => {
@@ -26,6 +38,4 @@ router.afterEach(() => {
   window.scrollTo(0, 0)
 })
 
-export default new Router({
-  routes
-})
+export default router

@@ -6,22 +6,21 @@
   .banner {
     position: relative;
     width: 100%;
-    .ivu-carousel {
-      .ivu-carousel-list {
+    .swiper-container {
+      .swiper-slide {
         width: 100%;
         height: 328 / @pxtorem;
         overflow: hidden;
-        .ivu-carousel-track {
-          height: 100%;
-          .ivu-carousel-item {
-            height: 100% !important;
-            img {
-              width: 100%;
-              height: auto;
-              min-height: 100%;
-              vertical-align: bottom;
-            }
-          }
+        img {
+          width: 100%;
+          height: auto;
+          min-height: 100%;
+          vertical-align: bottom;
+        }
+      }
+      .swiper-pagination {
+        .swiper-pagination-bullet-active {
+          background: #FFF;
         }
       }
     }
@@ -30,6 +29,7 @@
       top: 15 / @pxtorem;
       width: 100%;
       padding: 20 / @pxtorem 60 / @pxtorem;
+      z-index: 1000;
       .form-item {
         width: 100%;
         height: 65 / @pxtorem;
@@ -280,11 +280,15 @@
 <template>
   <div class="kongquehui">
     <div class="banner">
-      <Carousel autoplay v-model="currentBanner">
-        <Carousel-item v-for="(item, index) in bannerList" :key="item.id">
+      <swiper :options="swiperOption" ref="mySwiper">
+        <!-- slides -->
+        <swiper-slide v-for="(item, index) in bannerList" :key="item.id">
           <img :src="baseImgUrl + item.picKey">
-        </Carousel-item>
-      </Carousel>
+        </swiper-slide>
+        <!-- Optional controls -->
+          <div class="swiper-pagination"  slot="pagination"></div>
+      </swiper>
+
       <form>
         <div class="form-item">
           <input class="search" name="search" placeholder="商品搜索">
@@ -305,7 +309,7 @@
         <ul class="items">
           <li v-for="item in activityList" v-bind:key="item.name">
             <div class="item">
-              <router-link :to="'activity-detail/' + item.id">
+              <router-link :to="'/activity-detail/' + item.id">
                 <div class="pic">
                   <img class="activityBg" :src="baseImgUrl + item.coverImg">
                   <template v-if="item.activityStatus === 0">
@@ -367,6 +371,7 @@
 
 <script>
 import Guide from '@/components/footer/index'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import moment from 'moment'
 import config from '@/config/config'
 import { kongquehui } from '@/api/service'
@@ -397,11 +402,19 @@ export default {
         value: '2',
         label: '已结束'
       }],
+      swiperOption: {
+        autoplay: 3000,
+        loop: true,
+        pagination: '.swiper-pagination',
+        paginationClickable: true
+      },
       listStatus: '暂无活动信息~'
     }
   },
   components: {
-    Guide
+    Guide,
+    swiper,
+    swiperSlide
   },
   mounted () {
     //  获取孔雀会首页数据

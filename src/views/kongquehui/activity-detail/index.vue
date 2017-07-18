@@ -2,6 +2,7 @@
 @pxtorem: 20rem;
 
 .activity-detail {
+  padding-bottom: 100 / @pxtorem;
   .body {
     .activity {
       border-top: 1px solid #f0f0f0;
@@ -285,6 +286,52 @@
       }
     }
   }
+  .btn-group {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    width: 100%;
+    height: 98 / @pxtorem;
+    align-items: center;
+    justify-content: flex-start;
+    button {
+      height: 98 / @pxtorem;
+      img {
+        vertical-align: bottom;
+      }
+    }
+    .share {
+      width: 22%;
+      background: #FFF;
+      img {
+        width: 49 / @pxtorem;
+        height: 51 / @pxtorem;
+      }
+    }
+    .follow {
+      width: 22%;
+      background: #FFF;
+      img {
+        width: 56 / @pxtorem;
+        height: 56 / @pxtorem;
+      }
+    }
+    .join {
+      width: 56%;
+      color: #715e33;
+      font-size: 34 / @pxtorem;
+      background: #dad4a2;
+      img {
+        width: 49 / @pxtorem;
+        height: 51 / @pxtorem;
+      }
+    }
+    .join:disabled {
+      color: #999;
+      background: #ddd;
+    }
+  }
 }
 </style>
 
@@ -405,6 +452,18 @@
           </li>
         </ul>
       </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="share">
+        <img src="../../../assets/images/share.png">
+        <!-- <img src="../../../assets/images/share.png"> -->
+      </button>
+      <button class="follow">
+        <img src="../../../assets/images/nomark.png">
+        <!-- <img src="../../../assets/images/on-attention.png"> -->
+      </button>
+      <button class="join">报名参与</button>
     </div>
   </div>
 </template>

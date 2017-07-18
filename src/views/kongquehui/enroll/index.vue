@@ -2,7 +2,7 @@
   <div class="enroll">
     <header class="header">
       <button id="back" class="back">
-        <img src="../../assets/images/goBack.png" >
+        <img src="../../../assets/images/goBack.png" >
       </button>
       <span>报名参与</span>
     </header>

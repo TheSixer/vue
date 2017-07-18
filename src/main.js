@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import iView from 'iview'
 import Vuex from 'vuex'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 import Moment from 'moment'
 import store from './store/'
 import App from './App'
@@ -14,6 +15,7 @@ import 'iview/dist/styles/iview.css'
 
 Vue.use(Vuex)
 Vue.use(iView)
+Vue.use(VueAwesomeSwiper)
 // Vue.use(Loading)
 // Vue.use(Tips)
 // Vue.use(Aleter)

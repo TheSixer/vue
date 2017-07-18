@@ -1,5 +1,5 @@
 import axios from 'axios'
-import router from '@/router/routes'
+import router from '@/router/index'
 import store from '@/store/index'
 import config from '@/config/config'
 import * as types from '@/store/mutation-types'
