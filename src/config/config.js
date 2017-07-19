@@ -7,6 +7,7 @@ const ajaxUrl = Env === 'development'
   : 'https://debug.url.com'
 
 const qiniu = {
+  'URL': 'http://upload.qiniu.com/',
   'ACCESS_KEY': 'zL8RDyzvwQ_vw1jcQdR3h9q-1cd1DgVCbuIizDm8',
   'SECRET_KEY': 'gVJMq0EsR7dSXayDHds9laVCitirh2hGgaPjqeX6',
   'BUCKET': 'workspace',

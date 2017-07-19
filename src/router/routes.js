@@ -37,7 +37,7 @@ export default [ {
   },
   component: activityDetail
 }, {
-  path: '/enroll',
+  path: '/enroll/:id',
   meta: {
     title: 'enroll'
   },

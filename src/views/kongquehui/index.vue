@@ -6,6 +6,7 @@
   .banner {
     position: relative;
     width: 100%;
+    height: 328 / @pxtorem;
     .swiper-container {
       .swiper-slide {
         width: 100%;

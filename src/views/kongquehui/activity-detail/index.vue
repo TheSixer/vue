@@ -399,7 +399,7 @@
                 </router-link>
               </div>
               <div class="bottom">
-                <p>活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容</p>
+                <p>{{ activity.synopsis }}</p>
               </div>
             </div>
           </Tab-pane>
@@ -463,7 +463,7 @@
         <img src="../../../assets/images/nomark.png">
         <!-- <img src="../../../assets/images/on-attention.png"> -->
       </button>
-      <button class="join">报名参与</button>
+      <button class="join" @click="joinThisAct">报名参与</button>
     </div>
   </div>
 </template>
@@ -506,6 +506,11 @@ export default {
           this.activityMember = res.data.activityMember
           this.activityMoodList = res.data.activityMoodList
         }
+      })
+    },
+    joinThisAct () {
+      this.$router.push({
+        path: '/enroll/' + this.activityId
       })
     }
   }

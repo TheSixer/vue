@@ -1,15 +1,18 @@
-import * as types from './mutation-types'
+import * as Types from './mutation-types'
 
 export default {
-  [types.LOGIN]: (state, data) => {
+  [Types.LOGIN]: (state, data) => {
     localStorage.token = data
     state.token = data
   },
-  [types.LOGOUT]: (state) => {
+  [Types.LOGOUT]: (state) => {
     localStorage.removeItem('token')
     state.token = null
   },
-  [types.TITLE]: (state, data) => {
+  [Types.TITLE]: (state, data) => {
     state.title = data
+  },
+  [Types.RECORD_QINIUTOKEN]: (state, data) => {
+    state.qiniuToken = data
   }
 }
