@@ -1,7 +1,7 @@
 import Env from './env'
 
 const ajaxUrl = Env === 'development'
-  ? 'http://zhimei.com/api'
+  ? 'http://localhost/api'
   : Env === 'production'
   ? 'https://www.url.com'
   : 'https://debug.url.com'

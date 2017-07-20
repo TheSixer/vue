@@ -63,7 +63,7 @@
       <Form ref="formWithdraw" :model="formWithdraw">
         <Form-item prop="user">
             <i class="name">
-              体现金额
+              提现金额
             </i>
             <Input type="text" v-model="formWithdraw.count" placeholder="可提现金额 ¥10000">
             </Input>
