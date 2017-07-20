@@ -6,14 +6,12 @@
   .banner {
     position: relative;
     width: 100%;
-    height: 400 / @pxtorem;
+    min-height: 60vw;
     img {
-      position: absolute;
-      left: 0;
-      top: 0;
       width: 100%;
       height: auto;
-      min-height: 400 / @pxtorem;
+      min-height: 60vw;
+      vertical-align: bottom;
     }
     form {
       position: absolute;
@@ -67,35 +65,43 @@
         align-items: center;
         justify-content: center;
         width: 100%;
+        height: auto;
         margin-bottom: 10 / @pxtorem;
         .bigPic {
           position: relative;
-          width: 415 / @pxtorem;
-          height: 290 / @pxtorem;
+          width: 55vw;
+          height: 40vw;
           margin: 0 5 / @pxtorem;
           overflow: hidden;
           border-radius: 6 / @pxtorem;
           img {
             position: absolute;
-            width: auto;
-            height: 100%;
+            width: 100%;
+            height: 40vw;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%);
+          }
+          .float {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            text-align: center;
           }
         }
         .dis-small {
-          display: flex;
+          display: inline-flex;
           align-items: center;
           justify-content: flex-start;
           flex-direction: column;
-          width: 295 / @pxtorem;
-          height: 290 / @pxtorem;
+          width: 40%;
+          height: 40vw;
           margin: 0 5/ @pxtorem;
           a {
             position: relative;
             display: inline-block;
             width: 100%;
-            height: 140 / @pxtorem;
+            height: 50%;
             overflow: hidden;
             border-radius: 6 / @pxtorem;
             img {
@@ -103,7 +109,13 @@
               width: auto;
               height: 100%;
               left: 50%;
-              transform: translateX(-50%);
+              transform: translate(-50%);
+            }
+            .float {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
             }
           }
           a:last-child {
@@ -152,7 +164,7 @@
         a {
           display: block;
           width: 100%;
-          height: 372 / @pxtorem;
+          height: calc(50vw - 0.25rem);
           overflow: hidden;
           img {
             width: 100%;
@@ -412,19 +424,25 @@
         <div class="distribution">
           <router-link class="bigPic" to="">
             <img src="../../assets/images/home-bg.png">
-            <span class="">月榜</span>
-            <span class="s-title">美丽日记</span>
+            <div class="float">
+              <span class="">月榜</span>
+              <span class="s-title">美丽日记</span>
+            </div>
           </router-link>
           <div class="dis-small">
             <router-link to="">
               <img src="../../assets/images/act-month01.png">
-              <span class="">月榜</span>
-              <span class="s-title">美丽日记</span>
+              <div class="float">
+                <span class="">月榜</span>
+                <span class="s-title">美丽日记</span>
+              </div>
             </router-link>
             <router-link to="">
               <img src="../../assets/images/act-month02.png">
-              <span class="">月榜</span>
-              <span class="s-title">美丽日记</span>
+              <div class="float">
+                <span class="">月榜</span>
+                <span class="s-title">美丽日记</span>
+              </div>
             </router-link>
           </div>
         </div>
@@ -433,19 +451,25 @@
           <div class="dis-small">
             <router-link to="">
               <img src="../../assets/images/act-month01.png">
-              <span class="">月榜</span>
-              <span class="s-title">美丽日记</span>
+              <div class="float">
+                <span class="">月榜</span>
+                <span class="s-title">美丽日记</span>
+              </div>
             </router-link>
             <router-link to="">
               <img src="../../assets/images/act-month02.png">
-              <span class="">月榜</span>
-              <span class="s-title">美丽日记</span>
+              <div class="float">
+                <span class="">月榜</span>
+                <span class="s-title">美丽日记</span>
+              </div>
             </router-link>
           </div>
           <router-link class="bigPic" to="">
             <img src="../../assets/images/home-bg.png">
-            <span class="">月榜</span>
-            <span class="s-title">美丽日记</span>
+            <div class="float">
+              <span class="">月榜</span>
+              <span class="s-title">美丽日记</span>
+            </div>
           </router-link>
         </div>
       </div>
@@ -664,3 +688,4 @@ export default {
   }
 }
 </script>
+

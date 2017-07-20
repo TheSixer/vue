@@ -88,7 +88,7 @@
               justify-content: center;
               flex-direction: column;
               padding: 30 / @pxtorem;
-              background: url('../../assets/images/theOne.png') no-repeat;
+              background: url('../../../assets/images/theOne.png') no-repeat;
               background-color: #fff;
               background-position: top center;
               background-size: 60%;
@@ -370,7 +370,7 @@
       <Tabs value="type" v-model="type">
         <Tab-pane label="日榜" name="day">
           <div class="day-header">
-            <img src="../../assets/images/home-bg.png" alt="">
+            <img src="../../../assets/images/home-bg.png" alt="">
             <div class="list">
               <router-link to="">
                 往期记录
@@ -381,103 +381,105 @@
             </div>
           </div>
           <div class="dayBody">
-            <div class="first">
-              <div class="rank">
-                <img src="../../assets/images/rank01.png"> 1
-              </div>
-              <div class="info">
-                <div class="head">
-                  <img class="headImg" src="../../assets/images/userHead.png">
-                  <img class="headBg" src="../../assets/images/rank-bg01.png">
+            <template v-for="(item, index) in dayMemberList">
+              <div class="first" v-if="index === 0">
+                <div class="rank">
+                  <img src="../../../assets/images/rank01.png"> 1
                 </div>
-                <p class="nickname">一懒众衫小 <span>票数2800</span></p>
+                <div class="info">
+                  <div class="head">
+                    <img class="headImg" src="../../../assets/images/userHead.png">
+                    <img class="headBg" src="../../../assets/images/rank-bg01.png">
+                  </div>
+                  <p class="nickname">一懒众衫小 <span>票数2800</span></p>
+                  <p class="manifesto">参赛宣言：</p>
+                  <p class="content">狭路相逢勇者胜！ oh yeah...</p>
+                </div>
+                <!--<button>
+                  <img src="../../../assets/images/gift.png">
+                  为TA加油
+                </button>-->
+                <img class="win" src="../../../assets/images/win.png">
+              </div>
+              <div class="second" v-else-if="index === 1">
+                <div class="top">
+                  <div class="rank">
+                    <img src="../../../assets/images/rank02.png"> 2
+                  </div>
+                  <div class="info">
+                    <div class="head">
+                      <img class="headImg" src="../../../assets/images/userHead.png">
+                      <img class="headBg" src="../../../assets/images/rank-bg02.png">
+                    </div>
+                    <div class="info-detail">
+                      <span class="name">一懒众衫小</span>
+                      <span class="tickets">票数2600</span>
+                    </div>
+                  </div>
+                  <div class="support">
+                    <!--<button>
+                      <img src="../../../assets/images/gift.png">
+                      为TA加油
+                    </button>-->
+                  </div>
+                  <img class="win" src="../../../assets/images/win.png">
+                </div>
                 <p class="manifesto">参赛宣言：</p>
-                <p class="content">狭路相逢勇者胜！ oh yeah...</p>
+                <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
               </div>
-              <!--<button>
-                <img src="../../assets/images/gift.png">
-                为TA加油
-              </button>-->
-              <img class="win" src="../../assets/images/win.png">
-            </div>
-            <div class="second">
-              <div class="top">
-                <div class="rank">
-                  <img src="../../assets/images/rank02.png"> 2
-                </div>
-                <div class="info">
-                  <div class="head">
-                    <img class="headImg" src="../../assets/images/userHead.png">
-                    <img class="headBg" src="../../assets/images/rank-bg02.png">
+              <div class="second" v-else-if="index === 2">
+                <div class="top">
+                  <div class="rank">
+                    <img src="../../../assets/images/rank03.png"> 3
                   </div>
-                  <div class="info-detail">
-                    <span class="name">一懒众衫小</span>
-                    <span class="tickets">票数2600</span>
+                  <div class="info">
+                    <div class="head">
+                      <img class="headImg" src="../../../assets/images/userHead.png">
+                      <img class="headBg" src="../../../assets/images/rank-bg03.png">
+                    </div>
+                    <div class="info-detail">
+                      <span class="name">一懒众衫小</span>
+                      <span class="tickets">票数2600</span>
+                    </div>
                   </div>
+                  <div class="support">
+                    <!--<button>
+                      <img src="../../../assets/images/gift.png">
+                      为TA加油
+                    </button>-->
+                  </div>
+                  <img class="win" src="../../../assets/images/win.png">
                 </div>
-                <div class="support">
-                  <!--<button>
-                    <img src="../../assets/images/gift.png">
-                    为TA加油
-                  </button>-->
-                </div>
-                <img class="win" src="../../assets/images/win.png">
+                <p class="manifesto">参赛宣言：</p>
+                <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
               </div>
-              <p class="manifesto">参赛宣言：</p>
-              <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
-            </div>
-            <div class="second">
-              <div class="top">
-                <div class="rank">
-                  <img src="../../assets/images/rank03.png"> 3
-                </div>
-                <div class="info">
-                  <div class="head">
-                    <img class="headImg" src="../../assets/images/userHead.png">
-                    <img class="headBg" src="../../assets/images/rank-bg03.png">
+              <div class="others" v-else>
+                <div class="top">
+                  <div class="info">
+                    <span class="rank">NO.4</span>
+                    <img class="headImg" src="../../../assets/images/userHead.png">
+                    <div class="info-detail">
+                      <span class="name">一懒众衫小</span>
+                      <span class="tickets">票数2600</span>
+                    </div>
                   </div>
-                  <div class="info-detail">
-                    <span class="name">一懒众衫小</span>
-                    <span class="tickets">票数2600</span>
+                  <div class="support">
+                    <!--<button>
+                      <img src="../../../assets/images/gift.png">
+                      为TA加油
+                    </button>-->
                   </div>
                 </div>
-                <div class="support">
-                  <!--<button>
-                    <img src="../../assets/images/gift.png">
-                    为TA加油
-                  </button>-->
-                </div>
-                <img class="win" src="../../assets/images/win.png">
+                <p class="manifesto">参赛宣言：</p>
+                <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
+                <img class="win" src="../../../assets/images/win.png">
               </div>
-              <p class="manifesto">参赛宣言：</p>
-              <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
-            </div>
-            <div class="others">
-              <div class="top">
-                <div class="info">
-                  <span class="rank">NO.4</span>
-                  <img class="headImg" src="../../assets/images/userHead.png">
-                  <div class="info-detail">
-                    <span class="name">一懒众衫小</span>
-                    <span class="tickets">票数2600</span>
-                  </div>
-                </div>
-                <div class="support">
-                  <!--<button>
-                    <img src="../../assets/images/gift.png">
-                    为TA加油
-                  </button>-->
-                </div>
-              </div>
-              <p class="manifesto">参赛宣言：</p>
-              <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
-              <img class="win" src="../../assets/images/win.png">
-            </div>
+            </template>
           </div>
         </Tab-pane>
         <Tab-pane label="月榜" name="month">
           <div class="day-header">
-            <img src="../../assets/images/home-bg.png" alt="">
+            <img src="../../../assets/images/home-bg.png" alt="">
             <div class="list">
               <router-link to="">
                 往期记录
@@ -492,7 +494,7 @@
               <div class="top">
                 <div class="info">
                   <span class="rank">NO.1</span>
-                  <img class="headImg" src="../../assets/images/userHead.png">
+                  <img class="headImg" src="../../../assets/images/userHead.png">
                   <div class="info-detail">
                     <span class="name">一懒众衫小</span>
                     <span class="tickets">票数2600</span>
@@ -500,20 +502,20 @@
                 </div>
                 <div class="support">
                   <!--<button>
-                    <img src="../../assets/images/gift.png">
+                    <img src="../../../assets/images/gift.png">
                     为TA加油
                   </button>-->
                 </div>
               </div>
               <p class="manifesto">参赛宣言：</p>
               <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
-              <img class="win" src="../../assets/images/win.png">
+              <img class="win" src="../../../assets/images/win.png">
             </div>
             <div class="others">
               <div class="top">
                 <div class="info">
                   <span class="rank">NO.2</span>
-                  <img class="headImg" src="../../assets/images/userHead.png">
+                  <img class="headImg" src="../../../assets/images/userHead.png">
                   <div class="info-detail">
                     <span class="name">一懒众衫小</span>
                     <span class="tickets">票数2600</span>
@@ -521,49 +523,59 @@
                 </div>
                 <div class="support">
                   <!--<button>
-                    <img src="../../assets/images/gift.png">
+                    <img src="../../../assets/images/gift.png">
                     为TA加油
                   </button>-->
                 </div>
               </div>
               <p class="manifesto">参赛宣言：</p>
               <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
-              <img class="win" src="../../assets/images/win.png">
+              <img class="win" src="../../../assets/images/win.png">
             </div>
           </div>
         </Tab-pane>
       </Tabs>
 
       <button @click="back">
-        <img src="../../assets/images/goBack.png">
+        <img src="../../../assets/images/goBack.png">
       </button>
     </header>
   </div>
 </template>
 
 <script>
+import { getRank } from '@/api/service'
+import config from '@/config/config'
 export default {
   data () {
     return {
-      type: this.$route.params.type
+      type: this.$route.params.type,
+      baseImgUrl: config.qiniu.IMG_PATH,
+      dayActivity: null,
+      dayMemberList: null,
+      monthActivity: null,
+      monthMemberList: null
     }
   },
-  created () {
-    console.log(this.$route)
+  mounted () {
+    this.initData()
   },
-  // computed: {
-  //   selected: function (newVal) {
-  //     this.type = newVal
-  //   }
-  // },
   methods: {
+    async initData () {
+      await getRank({}).then(res => {
+        console.log(res)
+        if (res.data.code === '200') {
+          this.dayActivity = res.data.dayActivity
+          this.dayMemberList = res.data.dayMemberList
+          this.monthActivity = res.data.monthActivity
+          this.monthMemberList = res.data.monthMemberList
+        } else {
+
+        }
+      })
+    },
     back () {
       this.$router.go(-1)
-    }
-  },
-  watch: {
-    selected: function (newVal) {
-      this.type = newVal
     }
   }
 }

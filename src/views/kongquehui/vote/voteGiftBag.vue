@@ -94,6 +94,7 @@
               .name {
                 color: #333;
                 font-size: 26 / @pxtorem;
+                width: 100%;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 2;
@@ -187,60 +188,15 @@
         <ul>
           <li>
             <router-link to="" class="item">
-              <img src="../../../assets/images/combo.png">
+              <img :src="baseImgUrl + giftBag.picKey">
               <div class="item-info">
-                <p class="name">商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称</p>
+                <p class="name">{{ giftBag.name }}</p>
                 <div class="num">
                   <p class="sum">
-                    <span class="count">￥<i>10</i>.00</span>
-                    <span class="origin">￥128.00</span>
+                    <span class="count">￥<i>{{ giftBag.price }}</i>.00</span>
+                    <!-- <span class="origin">￥128.00</span> -->
                   </p>
-                  <span class="ti">+1票</span>
-                </div>
-              </div>
-            </router-link>
-          </li>
-          <li>
-            <router-link to="" class="item">
-              <img src="../../../assets/images/combo.png">
-              <div class="item-info">
-                <p class="name">商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称</p>
-                <div class="num">
-                  <p class="sum">
-                    <span class="count">￥<i>10</i>.00</span>
-                    <span class="origin">￥128.00</span>
-                  </p>
-                  <span class="ti">+1票</span>
-                </div>
-              </div>
-            </router-link>
-          </li>
-          <li>
-            <router-link to="" class="item">
-              <img src="../../../assets/images/combo.png">
-              <div class="item-info">
-                <p class="name">商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称</p>
-                <div class="num">
-                  <p class="sum">
-                    <span class="count">￥<i>10</i>.00</span>
-                    <span class="origin">￥128.00</span>
-                  </p>
-                  <span class="ti">+1票</span>
-                </div>
-              </div>
-            </router-link>
-          </li>
-          <li>
-            <router-link to="" class="item">
-              <img src="../../../assets/images/combo.png">
-              <div class="item-info">
-                <p class="name">商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称</p>
-                <div class="num">
-                  <p class="sum">
-                    <span class="count">￥<i>10</i>.00</span>
-                    <span class="origin">￥128.00</span>
-                  </p>
-                  <span class="ti">+1票</span>
+                  <span class="ti">+{{ giftBag.poll }}票</span>
                 </div>
               </div>
             </router-link>
@@ -250,7 +206,7 @@
 		</div>
 
     <div class="caculate">
-      <span><b>总计</b> <i>￥</i>10.00</span>
+      <span><b>总计</b> <i>￥</i>{{ giftBag.price }}.00</span>
       <button>支付</button>
     </div>
   </div>
@@ -258,12 +214,37 @@
 
 <script>
 import Heade from '@/components/wordHeader/wordHeader'
+import config from '@/config/config'
+import { voteGiftBag } from '@/api/service'
 export default {
   data () {
     return {
-
+      baseImgUrl: config.qiniu.IMG_PATH,
+      giftBag: {
+        name: null,
+        picKey: null,
+        price: null
+      }
     }
   },
-  components: { Heade }
+  components: {
+    Heade
+  },
+  mounted () {
+    this.initData()
+  },
+  methods: {
+    async initData () {
+      await voteGiftBag({
+        giftBagId: this.$route.query.giftBagId
+      }).then(res => {
+        if (res.data.code === '200') {
+          this.giftBag = res.data.giftBag
+        } else {
+          this.$Message.error(res.data.message)
+        }
+      })
+    }
+  }
 }
 </script>

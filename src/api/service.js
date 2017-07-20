@@ -10,7 +10,7 @@ export const activityDetailApi = data => Util.http.get('/activity/detail?activit
 //  参与活动
 export const joinActivity = data => Util.http.post('/activity_member', data, {})
 //  参与详情
-export const joinDetail = data => Util.http.get('/activity_member/detail?activityId=' + data.activityId, {})
+export const joinDetail = data => Util.http.get('/activity_member/detail?activityId=' + data.activityId + '&memberId=' + data.memberId, {})
 //  获取免费票、礼物、礼包
 export const getMyPoll = data => Util.http.get('/activity_member/poll?memberId=' + data.memberId, {})
 //  投免费票

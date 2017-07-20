@@ -8,8 +8,7 @@ let util = {
 
 }
 util.title = (title) => {
-  console.log(title)
-  title = title ? title + ' - Home' : 'iView project'
+  title = title ? title + ' - 致美' : 'iView project'
   window.document.title = title
 }
 
