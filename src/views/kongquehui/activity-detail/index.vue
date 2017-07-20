@@ -123,8 +123,14 @@
                   width: 20%;
                   margin-right: 10 / @pxtorem;
                   .user {
+                    display: inline-block;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    overflow: hidden;
                     img {
                       width: 100%;
+                      vertical-align: bottom;
                     }
                   }
                 }
@@ -317,20 +323,21 @@
         height: 56 / @pxtorem;
       }
     }
-    .join {
+    .btn-join {
       width: 56%;
       color: #715e33;
       font-size: 34 / @pxtorem;
       background: #dad4a2;
+      &:disabled {
+        color: #999;
+        background: #ddd;
+      }
       img {
         width: 49 / @pxtorem;
         height: 51 / @pxtorem;
       }
     }
-    .join:disabled {
-      color: #999;
-      background: #ddd;
-    }
+
   }
 }
 </style>
@@ -345,14 +352,22 @@
           <Tab-pane label="活动详情" name="detail">
             <div class="actImg">
               <img class="act" :src="baseImgUrl + activity.coverImg">
-              <img class="status" src="../../../assets/images/underway.png">
+              <template v-if="activity.activityStatus === 0">
+                <img class="status" src="../../../assets/images/unBegin.png">
+              </template>
+              <template v-else-if="activity.activityStatus === 1">
+                <img class="status" src="../../../assets/images/underway.png">
+              </template>
+              <template v-else>
+                <img class="status" src="../../../assets/images/over.png">
+              </template>
             </div>
 
             <div class="actInfo">
               <p>{{ activity.name }}</p>
               <div class="date">
                 <img src="../../../assets/images/time.png">
-                <span>{{ activity.beginDate }}~{{ activity.endDate }}</span>
+                <span>{{ activity.beginDate | moment('YYYY/MM/DD') }}~{{ activity.endDate | moment('YYYY/MM/DD') }}</span>
               </div>
               <div class="address">
                 <img src="../../../assets/images/position.png">
@@ -363,37 +378,17 @@
             <div class="participator">
               <div class="top">
                 <span class="first">参与者</span>
-                <span class="last">已有<i>2814</i>人参与</span>
+                <span class="last">已有<i>{{ memberCount }}</i>人参与</span>
               </div>
               <div class="middle">
                 <ul>
-                  <li>
+                  <li v-for="item in activity.activityMemberList" :key="item.id">
                     <router-link to="" class="user">
-                      <img src="../../../assets/images/userHead.png">
-                    </router-link>
-                  </li>
-                  <li>
-                    <router-link to="" class="user">
-                      <img src="../../../assets/images/userHead.png">
-                    </router-link>
-                  </li>
-                  <li>
-                    <router-link to="" class="user">
-                      <img src="../../../assets/images/userHead.png">
-                    </router-link>
-                  </li>
-                  <li>
-                    <router-link to="" class="user">
-                      <img src="../../../assets/images/userHead.png">
-                    </router-link>
-                  </li>
-                  <li>
-                    <router-link to="" class="user">
-                      <img src="../../../assets/images/userHead.png">
+                      <img :src="baseImgUrl + item.matchImg">
                     </router-link>
                   </li>
                 </ul>
-                <router-link to="" class="more">
+                <router-link :to="'/join-detail/' + activity.id" class="more">
                   <span>查看更多</span>
                   <img src="../../../assets/images/more.png">
                 </router-link>
@@ -420,7 +415,10 @@
               <router-link :to="'/activity-detail/' + item.id" key="item.id">
                 <div class="pic">
                   <img class="activityBg" :src="baseImgUrl + item.coverImg">
-                  <template v-if="item.status">
+                  <template v-if="item.activityStatus === 0">
+                    <img class="status" src="../../../assets/images/unBegin.png">
+                  </template>
+                  <template v-else-if="item.activityStatus === 1">
                     <img class="status" src="../../../assets/images/underway.png">
                   </template>
                   <template v-else>
@@ -432,7 +430,7 @@
                       <div class="count">
                         参与<br>人数
                       </div>
-                      <span>{{ item.count }}人</span>
+                      <span>{{ item.memberCount }}人</span>
                     </div>
                     <p>{{ item.name }}</p>
                   </div>
@@ -441,7 +439,7 @@
               <div class="a-info">
                 <div class="a-time">
                   <img src="../../../assets/images/time.png">
-                  <span>{{ item.startTime }}~{{ item.endTime }}</span>
+                  <span>{{ item.beginDate | moment('YYYY/MM/DD') }}~{{ item.endDate | moment('YYYY/MM/DD') }}</span>
                 </div>
                 <div class="a-address">
                   <img src="../../../assets/images/position.png">
@@ -463,7 +461,7 @@
         <img src="../../../assets/images/nomark.png">
         <!-- <img src="../../../assets/images/on-attention.png"> -->
       </button>
-      <button class="join" @click="joinThisAct">报名参与</button>
+      <button class="btn-join" @click="joinThisAct">报名参与</button>
     </div>
   </div>
 </template>
@@ -478,7 +476,9 @@ export default {
       activityId: this.$route.params.id,
       baseImgUrl: config.qiniu.IMG_PATH,
       activity: {
-        coverImg: ''
+        coverImg: '',
+        activityStatus: null,
+        activityMemberList: []
       },
       activityMember: [],
       activityMoodList: []
@@ -487,17 +487,24 @@ export default {
   components: {
     Heade
   },
+  watch: {
+    '$route' (to, from) {
+      // 获取最新的id 调用获取数据方法
+      this.initData()
+    }
+  },
   created () {
     this.initData()
-    console.log('1111')
   },
   computed: {
-
+    memberCount () {
+      return this.activity.activityMemberList.length || '0'
+    }
   },
   methods: {
     async initData () {
       await activityDetailApi({
-        activityId: this.activityId,
+        activityId: this.$route.params.id,
         memberId: '001'
       }).then(res => {
         if (res.status === 200) {

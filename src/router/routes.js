@@ -1,7 +1,14 @@
 const home = r => require.ensure([], () => r(require('@/views/home/index')), 'home')
+
 const kongquehui = r => require.ensure([], () => r(require('@/views/kongquehui/index')), 'kongquehui')
 const enroll = r => require.ensure([], () => r(require('@/views/kongquehui/enroll/index')), 'enroll')
 const activityDetail = r => require.ensure([], () => r(require('@/views/kongquehui/activity-detail/index')), 'activityDetail')
+const joinDetail = r => require.ensure([], () => r(require('@/views/kongquehui/join-detail/index')), 'joinDetail')
+const voteGift = r => require.ensure([], () => r(require('@/views/kongquehui/vote/voteGift')), 'voteGift')
+const voteGiftBag = r => require.ensure([], () => r(require('@/views/kongquehui/vote/voteGiftBag')), 'voteGiftBag')
+const rank = r => require.ensure([], () => r(require('@/views/kongquehui/rank/index')), 'rank')
+const confirmOrder = r => require.ensure([], () => r(require('@/views/kongquehui/confirm-order/index')), 'confirmOrder')
+
 const safeShop = r => require.ensure([], () => r(require('@/views/easyShop/index')), 'easyShop')
 const mine = r => require.ensure([], () => r(require('@/views/mine/index')), 'mine')
 const commodityDetail = r => require.ensure([], () => r(require('@/views/easyShop/commodity-detail/index')), 'commodityDetail')
@@ -37,11 +44,41 @@ export default [ {
   },
   component: activityDetail
 }, {
+  path: '/join-detail/:id',
+  meta: {
+    title: 'join-detail'
+  },
+  component: joinDetail
+}, {
+  path: '/confirm-order',
+  meta: {
+    title: 'confirm-order'
+  },
+  component: confirmOrder
+}, {
+  path: '/vote-gift',
+  meta: {
+    title: 'vote-gift'
+  },
+  component: voteGift
+}, {
+  path: '/vote-giftBag',
+  meta: {
+    title: 'vote-giftBag'
+  },
+  component: voteGiftBag
+}, {
   path: '/enroll/:id',
   meta: {
     title: 'enroll'
   },
   component: enroll
+}, {
+  path: '/rank',
+  meta: {
+    title: '日榜/月榜'
+  },
+  component: rank
 }, {
   path: '/commodity-detail/:id',
   meta: {

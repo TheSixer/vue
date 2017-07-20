@@ -328,7 +328,7 @@
                       <div class="count">
                         参与<br>人数
                       </div>
-                      <span>{{ item.memberCount }}人</span>
+                      <span>{{item.memberCount}}人</span>
                     </div>
                     <p>{{ item.name }}</p>
                   </div>
@@ -337,7 +337,7 @@
               <div class="a-info">
                 <div class="a-time">
                   <img src="../../assets/images/time.png">
-                  <span>{{ item.beginDate | formatDate }}~{{ item.endDate | formatDate }}</span>
+                  <span>{{ item.beginDate | moment('YYYY/MM/DD') }}~{{ item.endDate | moment('YYYY/MM/DD') }}</span>
                 </div>
                 <div class="a-address">
                   <img src="../../assets/images/position.png">
@@ -373,7 +373,6 @@
 <script>
 import Guide from '@/components/footer/index'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import moment from 'moment'
 import config from '@/config/config'
 import { kongquehui } from '@/api/service'
 export default {
@@ -477,12 +476,6 @@ export default {
         duration: 0
       })
       this.activityList = []
-    }
-  },
-  filters: {
-    formatDate: function (value, formatString) {
-      formatString = formatString || 'YYYY/MM/DD'
-      return moment(value).format(formatString)
     }
   }
 }

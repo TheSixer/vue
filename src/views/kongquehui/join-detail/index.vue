@@ -2,6 +2,7 @@
 @pxtorem: 20rem;
 
 .join {
+  padding-bottom: 120 / @pxtorem;
   .body {
     margin-top: 20 / @pxtorem;
     .first {
@@ -12,7 +13,7 @@
       justify-content: center;
       flex-direction: column;
       padding: 30 / @pxtorem;
-      background: url('../../assets/images/theOne.png') no-repeat;
+      background: url('../../../assets/images/theOne.png') no-repeat;
       background-color: #fff;
       background-position: top center;
       background-size: 60%;
@@ -42,6 +43,9 @@
           margin: 0 auto;
           .headImg {
             width: 135 / @pxtorem;
+            height: 135 / @pxtorem;
+            border-radius: 50%;
+            vertical-align: bottom;
           }
           .headBg {
             position: absolute;
@@ -122,11 +126,16 @@
             position: relative;
             width: 143 / @pxtorem;
             height: 157 / @pxtorem;
-            padding: 4 / @pxtorem;
             margin-right: 30 / @pxtorem;
             text-align: center;
             .headImg {
+              position: relative;
+              left: 0.05rem;
+              top: 0.05rem;
               width: 118 / @pxtorem;
+              height: 118 / @pxtorem;
+              border-radius: 50%;
+              vertical-align: bottom;
             }
             .headBg {
               position: absolute;
@@ -260,11 +269,14 @@
       }
     }
     .buttons {
+      position: fixed;
+      left: 0;
+      bottom: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      width: 100%;
       padding-left: 30 / @pxtorem;
-      margin-top: 40 / @pxtorem;
       background: #fff;
       .myInfo {
         height: 90 / @pxtorem;
@@ -274,7 +286,7 @@
       }
       button {
         width: 220 / @pxtorem;
-        height: 110 / @pxtorem;
+        height: 98 / @pxtorem;
         color: #715e33;
         background: #dad4a2;
         font-size: 26 / @pxtorem;
@@ -296,6 +308,7 @@
     width: 100%;
     height: 560 / @pxtorem;
     background: fade(#000, 70%);
+    animation: move-in;
     .ivu-tabs {
       .ivu-tabs-bar {
         height: 90 / @pxtorem;
@@ -478,6 +491,29 @@
       background: #dad4a2;
     }
   }
+
+  .move-enter-active {
+    animation: move-in 1s;
+  }
+  .move-leave-active {
+    animation: move-out 1s;
+  }
+  @keyframes move-in {
+    0% {
+      bottom: -560 / @pxtorem;
+    }
+    100% {
+      bottom: 0;
+    }
+  }
+  @keyframes move-out {
+    0% {
+      bottom: 0;
+    }
+    100% {
+      bottom: -560 / @pxtorem;
+    }
+  }
 }
 </style>
 
@@ -486,225 +522,305 @@
     <Heade title="参与详情"></Heade>
 
     <div class="body">
-      <div class="first">
-        <div class="rank">
-          <img src="../../assets/images/rank01.png"> 1
-        </div>
-        <div class="info">
-          <div class="head">
-            <img class="headImg" src="../../assets/images/userHead.png">
-            <img class="headBg" src="../../assets/images/rank-bg01.png">
+      <template v-for="(item, index) in activityList">
+        <div class="first" v-if="index === 0">
+          <div class="rank">
+            <img src="../../../assets/images/rank01.png"> 1
           </div>
-          <p class="nickname">一懒众衫小 <span>票数2800</span></p>
+          <div class="info">
+            <div class="head">
+              <img class="headImg" :src="baseImgUrl + item.matchImg">
+              <img class="headBg" src="../../../assets/images/rank-bg01.png">
+            </div>
+            <p class="nickname">{{ item.memberName}} <span>票数 {{ item.poll || 0}}</span></p>
+            <p class="manifesto">参赛宣言：</p>
+            <p class="content">{{ item.matchManifesto }}</p>
+          </div>
+          <template v-if="activityStatus">
+            <button @click="support(item.memberId)">
+              <img src="../../../assets/images/gift.png">
+              为TA加油
+            </button>
+          </template>
+          <template v-if="item.prizeStatus">
+            <img class="win" src="../../../assets/images/win.png">
+          </template>
+        </div>
+        <div class="second" v-else-if="index === 1">
+          <div class="top">
+            <div class="rank">
+              <img src="../../../assets/images/rank02.png"> {{ index + 1 }}
+            </div>
+            <div class="info">
+              <div class="head">
+                <img class="headImg" :src="baseImgUrl + item.matchImg">
+                <img class="headBg" src="../../../assets/images/rank-bg02.png">
+              </div>
+              <div class="info-detail">
+                <span class="name">{{ item.memberName }}</span>
+                <span class="tickets">票数 {{ item.poll || 0 }}</span>
+              </div>
+            </div>
+            <div class="support">
+              <template v-if="activityStatus">
+                <button @click="support(item.memberId)">
+                  <img src="../../../assets/images/gift.png">
+                  为TA加油
+                </button>
+              </template>
+            </div>
+            <template v-if="item.prizeStatus">
+              <img class="win" src="../../../assets/images/win.png">
+            </template>
+          </div>
           <p class="manifesto">参赛宣言：</p>
-          <p class="content">狭路相逢勇者胜！ oh yeah...</p>
+          <p class="content">{{ item.matchManifesto }}</p>
         </div>
-        <!--<button>
-          <img src="../../assets/images/gift.png">
-          为TA加油
-        </button>-->
-        <img class="win" src="../../assets/images/win.png">
-      </div>
-      <div class="second">
-        <div class="top">
-          <div class="rank">
-            <img src="../../assets/images/rank02.png"> 2
-          </div>
-          <div class="info">
-            <div class="head">
-              <img class="headImg" src="../../assets/images/userHead.png">
-              <img class="headBg" src="../../assets/images/rank-bg02.png">
+        <div class="second" v-else-if="index === 2">
+          <div class="top">
+            <div class="rank">
+              <img src="../../../assets/images/rank03.png"> {{ index + 1 }}
             </div>
-            <div class="info-detail">
-              <span class="name">一懒众衫小</span>
-              <span class="tickets">票数2600</span>
+            <div class="info">
+              <div class="head">
+                <img class="headImg" :src="baseImgUrl + item.matchImg">
+                <img class="headBg" src="../../../assets/images/rank-bg03.png">
+              </div>
+              <div class="info-detail">
+                <span class="name">{{ item.memberName }}</span>
+                <span class="tickets">票数 {{ item.poll || 0 }}</span>
+              </div>
             </div>
+            <div class="support">
+              <template v-if="activityStatus">
+                <button @click="support(item.memberId)">
+                  <img src="../../../assets/images/gift.png">
+                  为TA加油
+                </button>
+              </template>
+            </div>
+            <template v-if="item.prizeStatus">
+              <img class="win" src="../../../assets/images/win.png">
+            </template>
           </div>
-          <div class="support">
-            <!--<button>
-              <img src="../../assets/images/gift.png">
-              为TA加油
-            </button>-->
-          </div>
-          <img class="win" src="../../assets/images/win.png">
+          <p class="manifesto">参赛宣言：</p>
+          <p class="content">{{ item.matchManifesto }}</p>
         </div>
-        <p class="manifesto">参赛宣言：</p>
-        <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
-      </div>
-      <div class="second">
-        <div class="top">
-          <div class="rank">
-            <img src="../../assets/images/rank03.png"> 3
-          </div>
-          <div class="info">
-            <div class="head">
-              <img class="headImg" src="../../assets/images/userHead.png">
-              <img class="headBg" src="../../assets/images/rank-bg03.png">
+        <div class="others" v-else>
+          <div class="top">
+            <div class="info">
+              <span class="rank">NO.{{ index + 1 }}</span>
+              <img class="headImg" :src="baseImgUrl + item.matchImg">
+              <div class="info-detail">
+                <span class="name">{{ item.memberName }}</span>
+                <span class="tickets">票数 {{ item.poll || 0 }}</span>
+              </div>
             </div>
-            <div class="info-detail">
-              <span class="name">一懒众衫小</span>
-              <span class="tickets">票数2600</span>
+            <div class="support">
+              <template v-if="activityStatus">
+                <button @click="support(item.memberId)">
+                  <img src="../../../assets/images/gift.png">
+                  为TA加油
+                </button>
+              </template>
             </div>
           </div>
-          <div class="support">
-            <!--<button>
-              <img src="../../assets/images/gift.png">
-              为TA加油
-            </button>-->
-          </div>
-          <img class="win" src="../../assets/images/win.png">
+          <p class="manifesto">参赛宣言：</p>
+          <p class="content">{{ item.matchManifesto }}</p>
+          <template v-if="item.prizeStatus">
+            <img class="win" src="../../../assets/images/win.png">
+          </template>
         </div>
-        <p class="manifesto">参赛宣言：</p>
-        <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
-      </div>
-      <div class="others">
-        <div class="top">
-          <div class="info">
-            <span class="rank">NO.4</span>
-            <img class="headImg" src="../../assets/images/userHead.png">
-            <div class="info-detail">
-              <span class="name">一懒众衫小</span>
-              <span class="tickets">票数2600</span>
-            </div>
-          </div>
-          <div class="support">
-            <!--<button>
-              <img src="../../assets/images/gift.png">
-              为TA加油
-            </button>-->
-          </div>
-        </div>
-        <p class="manifesto">参赛宣言：</p>
-        <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
-        <img class="win" src="../../assets/images/win.png">
-      </div>
+      </template>
 
       <div class="buttons">
         <div class="myInfo">
           <span>暂未参与</span>
         </div>
-        <button>立即参与</button>
+        <button @click="joinThisAct">立即参与</button>
       </div>
     </div>
 
-    <div class="modalBg" v-if="modal"></div>
-    <div class="modal" v-if="modal">
-      <Tabs value="giftBag">
-        <Tab-pane label="免费票" name="free">
-          <div class="content">
-            <Radio-group v-model="free" type="button">
-              <Radio label="1">
-                <img src="../../assets/images/header-bg.png">
-                <p>礼物名称</p>
-                <div class="giftInfo">
-                  <span class="money">￥<i>5</i>.00</span>
-                  <span class="ticket">+<i>1</i>票</span>
-                </div>
-              </Radio>
-            </Radio-group>
-          </div>
-        </Tab-pane>
-        <Tab-pane label="礼物" name="gift">
-          <div class="content">
-            <Radio-group v-model="gift" type="button">
-              <Radio label="1">
-                <img src="../../assets/images/header-bg.png">
-                <p>礼物名称</p>
-                <div class="giftInfo">
-                  <span class="money">￥<i>5</i>.00</span>
-                  <span class="ticket">+<i>1</i>票</span>
-                </div>
-              </Radio>
-              <Radio label="2">
-                <img src="../../assets/images/header-bg.png">
-                <p>礼物名称</p>
-                <div class="giftInfo">
-                  <span class="money">￥<i>5</i>.00</span>
-                  <span class="ticket">+<i>1</i>票</span>
-                </div>
-              </Radio>
-              <Radio label="3">
-                <img src="../../assets/images/header-bg.png">
-                <p>礼物名称</p>
-                <div class="giftInfo">
-                  <span class="money">￥<i>5</i>.00</span>
-                  <span class="ticket">+<i>1</i>票</span>
-                </div>
-              </Radio>
-              <Radio label="4">
-                <img src="../../assets/images/header-bg.png">
-                <p>礼物名称</p>
-                <div class="giftInfo">
-                  <span class="money">￥<i>5</i>.00</span>
-                  <span class="ticket">+<i>1</i>票</span>
-                </div>
-              </Radio>
-            </Radio-group>
-          </div>
-        </Tab-pane>
-        <Tab-pane label="礼包" name="giftBag">
-          <div class="content-giftBag">
-            <Radio-group v-model="giftBag" type="button">
-              <Radio label="1">
-                <img src="../../assets/images/header-bg.png">
-                <p class="name">礼物名称</p>
-                <p class="intro">礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明</p>
-                <div class="giftInfo">
-                  <span class="money">￥<i>5</i>.00</span>
-                  <span class="ticket">+<i>1</i>票</span>
-                </div>
-              </Radio>
-              <Radio label="2">
-                <img src="../../assets/images/header-bg.png">
-                <p class="name">礼物名称</p>
-                <p class="intro">礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明</p>
-                <div class="giftInfo">
-                  <span class="money">￥<i>5</i>.00</span>
-                  <span class="ticket">+<i>1</i>票</span>
-                </div>
-              </Radio>
-              <Radio label="3">
-                <img src="../../assets/images/header-bg.png">
-                <p class="name">礼物名称</p>
-                <p class="intro">礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明</p>
-                <div class="giftInfo">
-                  <span class="money">￥<i>5</i>.00</span>
-                  <span class="ticket">+<i>1</i>票</span>
-                </div>
-              </Radio>
-              <Radio label="4">
-                <img src="../../assets/images/header-bg.png">
-                <p class="name">礼物名称</p>
-                <p class="intro">礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明礼物说明</p>
-                <div class="giftInfo">
-                  <span class="money">￥<i>5</i>.00</span>
-                  <span class="ticket">+<i>1</i>票</span>
-                </div>
-              </Radio>
-            </Radio-group>
-          </div>
-        </Tab-pane>
-      </Tabs>
+    <div class="modalBg" @click="cancleSupport" v-if="modal"></div>
+    <transition name="move">
+      <div class="modal" v-if="modal">
+        <Tabs value="giftBag" v-model="voteType">
+          <Tab-pane label="免费票" name="free">
+            <div class="content">
+              <Radio-group v-model="free" type="button">
+                <Radio label="1">
+                  <img src="../../../assets/images/header-bg.png">
+                  <p>免费票</p>
+                  <div class="giftInfo">
+                    <span class="money">￥<i>0</i>.00</span>
+                    <span class="ticket">+<i>{{ member.poll || 0}}</i>票</span>
+                  </div>
+                </Radio>
+              </Radio-group>
+            </div>
+          </Tab-pane>
+          <Tab-pane label="礼物" name="gift">
+            <div class="content">
+              <Radio-group v-model="gift" type="button">
+                <Radio v-for="item in giftList" :key="item.id" :label="item.id" >
+                  <img :src="baseImgUrl + item.picKey">
+                  <p>{{ item.name }}</p>
+                  <div class="giftInfo">
+                    <span class="money">￥<i>{{ item.price }}</i>.00</span>
+                    <span class="ticket">+<i>{{ item.poll }}</i>票</span>
+                  </div>
+                </Radio>
+              </Radio-group>
+            </div>
+          </Tab-pane>
+          <Tab-pane label="礼包" name="giftBag">
+            <div class="content-giftBag">
+              <Radio-group v-model="giftBag" type="button">
+                <Radio v-for="item in giftBagList" :key="item.id" :label="item.id">
+                  <img :src="baseImgUrl + item.picKey">
+                  <p class="name">{{ item.name }}</p>
+                  <p class="intro">{{ item.description }}</p>
+                  <div class="giftInfo">
+                    <span class="money">￥<i>{{ item.price }}</i>.00</span>
+                    <span class="ticket">+<i>{{ item.poll }}</i>票</span>
+                  </div>
+                </Radio>
+              </Radio-group>
+            </div>
+          </Tab-pane>
+        </Tabs>
 
-      <button>确认投票</button>
-    </div>
-
+        <button @click="vote">确认投票</button>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import Heade from '@/components/wordHeader/wordHeader'
+import { joinDetail, getMyPoll, voteGratis } from '@/api/service'
+import config from '@/config/config'
 export default {
   data () {
     return {
+      baseImgUrl: config.qiniu.IMG_PATH,
+      activityId: this.$route.params.id,
+      activityStatus: null,
+      activityList: [],
       modal: false,
-      free: '1',
-      gift: '1',
-      giftBag: '1'
+      pollMemberId: null,   //  被投票者
+      voteType: 'free',   //  初始化投票modal类型
+      free: '',
+      gift: '',
+      giftBag: '',
+      member: null,
+      giftList: [],
+      giftBagList: []
     }
   },
   components: {
     Heade
+  },
+  mounted () {
+    this.initData()
+  },
+  methods: {
+    async initData () {
+      await joinDetail({
+        memberId: '001',
+        activityId: this.activityId
+      }).then(res => {
+        if (res.data.code === '200') {
+          this.activityStatus = res.data.activityStatus
+          this.activityList = res.data.activityList
+        }
+      })
+      //  获取免费票、礼物、礼包
+      await getMyPoll({
+        memberId: '001'
+      }).then(res => {
+        console.log(res.data)
+        if (res.data.code === '200') {
+          this.member = res.data.member
+          this.giftList = res.data.giftList
+          this.giftBagList = res.data.giftBagList
+        }
+      })
+    },
+    vote () {
+      const vType = this.voteType
+      if (vType === 'free') {
+        this.voteFree()
+      } else if (vType === 'gift') {
+        this.voteGift()
+      } else {
+        this.voteGiftBag()
+      }
+    },
+    voteFree () {
+      if (this.member.poll === 0) {
+        this.$Message.warning('免费票不足！')
+        return
+      }
+
+      voteGratis({
+        memberId: '001',
+        pollMemberId: this.pollMemberId,
+        activityId: this.activityId
+      }).then(res => {
+        if (res.data.code === '200') {
+          this.$Message.success({
+            content: res.data.message,
+            duration: 3,
+            closable: true
+          })
+        } else {
+          this.$Message.error({
+            content: res.data.message,
+            duration: 3,
+            closable: true
+          })
+        }
+      })
+    },
+    voteGift () {
+      if (!this.gift) {
+        this.$Message.warning('请选择一个礼物！')
+      } else {
+        const giftId = this.gift
+        this.$router.push({
+          path: '/vote-gift',
+          query: {
+            giftId
+          }
+        })
+      }
+    },
+    voteGiftBag () {
+      if (!this.giftBag) {
+        this.$Message.warning('请选择一个礼包！')
+      } else {
+        const giftBagId = this.giftBag
+        this.$router.push({
+          path: '/vote-giftBag',
+          query: {
+            giftBagId
+          }
+        })
+      }
+    },
+    support (memberId) {
+      this.modal = true
+      this.pollMemberId = memberId
+    },
+    cancleSupport () {
+      this.modal = false
+    },
+    joinThisAct () {
+      this.$router.push({
+        path: '/enroll/' + this.activityId
+      })
+    }
   }
 }
 </script>

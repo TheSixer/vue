@@ -27,7 +27,6 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     iView.LoadingBar.start()
-    console.log(to, from)
     Util.title(to.meta.title)
     next()
   }
