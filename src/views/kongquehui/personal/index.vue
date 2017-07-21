@@ -80,7 +80,7 @@
             }
           }
         }
-        .follow {
+        .attention {
           button {
             width: 140 / @pxtorem;
             height: 55 / @pxtorem;
@@ -435,7 +435,7 @@
               </div>
             </div>
           </div>
-          <div class="follow" v-if="activityMember.memberId !== memberId">
+          <div class="attention" v-if="activityMember.memberId !== memberId">
             <template v-if="!attentionStatus">
               <button @click="attention">+ 关注</button>
             </template>
