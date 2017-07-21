@@ -57,20 +57,20 @@
 
 <template>
   <div class="balance-records">
-    <Heade title="提现"></Heade>
+    <Heade title="充值"></Heade>
 
     <div class="body">
       <Form ref="formWithdraw" :model="formWithdraw">
-        <!-- <Form-item prop="user">
+        <Form-item prop="user">
             <i class="name">
-              提现金额
+              充值金额
             </i>
-            <Input type="text" v-model="formWithdraw.count" placeholder="可提现金额 ¥10000">
+            <Input type="text" v-model="formWithdraw.count" placeholder="请输入充值金额">
             </Input>
-        </Form-item> -->
+        </Form-item>
 
         <div class="btn-item">
-          <button class="enrollBtn" @click="enrollSubmit('formEnroll')" long>提交申请</button>
+          <button class="enrollBtn" @click="enrollSubmit('formEnroll')" long>确定</button>
         </div>
       </Form>
     </div>

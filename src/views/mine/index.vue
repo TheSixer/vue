@@ -154,7 +154,7 @@
           <img src="../../assets/images/myCollection.png">
           <span>我的收藏<i></i></span>
         </router-link>
-        <router-link to="" class="item-tab">
+        <router-link to="/mine/activity" class="item-tab">
           <img src="../../assets/images/myActivity.png">
           <span>我的活动<i></i></span>
         </router-link>

@@ -18,13 +18,15 @@ const balanceRecord = r => require.ensure([], () => r(require('@/views/mine/bala
 const integralRecord = r => require.ensure([], () => r(require('@/views/mine/integralRecord/index')), 'integralRecord')
 const follow = r => require.ensure([], () => r(require('@/views/mine/follow/index')), 'follow')
 const collection = r => require.ensure([], () => r(require('@/views/mine/collection/index')), 'collection')
+const myActivity = r => require.ensure([], () => r(require('@/views/mine/myActivity/index')), 'myActivity')
 const myBankCard = r => require.ensure([], () => r(require('@/views/mine/myBankCard/index')), 'myBankCard')
+const withdraw = r => require.ensure([], () => r(require('@/views/mine/withdraw/index')), 'withdraw')
+const recharge = r => require.ensure([], () => r(require('@/views/mine/recharge/index')), 'recharge')
 const addBankCard = r => require.ensure([], () => r(require('@/views/mine/myBankCard/addBankCard/index')), 'addBankCard')
 const changePassword = r => require.ensure([], () => r(require('@/views/mine/changePassword/index')), 'changePassword')
 
 const safeShop = r => require.ensure([], () => r(require('@/views/easyShop/index')), 'easyShop')
 const commodityDetail = r => require.ensure([], () => r(require('@/views/easyShop/commodity-detail/index')), 'commodityDetail')
-const withdraw = r => require.ensure([], () => r(require('@/views/mine/withdraw/index')), 'withdraw')
 const payanother = r => require.ensure([], () => r(require('@/views/mine/payanother/payanother')), 'payanother')
 const servicestore = r => require.ensure([], () => r(require('@/views/mine/servicestore/servicestore')), 'servicestore')
 const payment = r => require.ensure([], () => r(require('@/views/mine/payment/payment')), 'payment')
@@ -132,6 +134,12 @@ export default [{
   },
   component: follow
 }, {
+  path: '/mine/recharge',
+  meta: {
+    title: '充值'
+  },
+  component: recharge
+}, {
   path: '/mine/withdraw',
   meta: {
     title: '提现'
@@ -143,6 +151,12 @@ export default [{
     title: '我的收藏'
   },
   component: collection
+}, {
+  path: '/mine/activity',
+  meta: {
+    title: '我的活动'
+  },
+  component: myActivity
 }, {
   path: '/mine/my-bank-card',
   meta: {

@@ -60,7 +60,7 @@ export const addCollect = data => Util.http.post('/member_collect/add', data, {}
 //  取消收藏
 export const cancleCollect = data => Util.http.delete('/member_collect/cancal', data, {})
 //  我的活动
-export const getMyActivity = data => Util.http.get('/activity_member/my?memberId' + data.memberId, {})
+export const getMyActivity = data => Util.http.get('/activity_member/my?memberId=' + data.memberId, {})
 //  谁为我投票
 export const getMyFans = data => Util.http.get('/poll/my?memberId=' + data.memberId, {})
 //  用户关系

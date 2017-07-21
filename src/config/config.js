@@ -3,7 +3,7 @@ import Env from './env'
 const ajaxUrl = Env === 'development'
   ? 'http://localhost/api'
   : Env === 'production'
-  ? 'https://www.url.com'
+  ? 'http://www.llzmh.com'
   : 'https://debug.url.com'
 
 const qiniu = {
