@@ -1,5 +1,8 @@
 import { getQiniuToken } from '@/api/service'
-import { RECORD_QINIUTOKEN } from '@/store/mutation-types'
+import {
+  GET_CURRENTUSER_MEMBERID,
+  RECORD_QINIUTOKEN
+} from '@/store/mutation-types'
 
 export default {
   async recordQiniuToken ({
@@ -16,5 +19,11 @@ export default {
         commit(RECORD_QINIUTOKEN, token)
       }
     })
+  },
+  getUserMemberId ({
+    commit,
+    state
+  }) {
+    commit(GET_CURRENTUSER_MEMBERID, '001')
   }
 }

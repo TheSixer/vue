@@ -493,10 +493,10 @@
   }
 
   .move-enter-active {
-    animation: move-in 1s;
+    animation: move-in .5s;
   }
   .move-leave-active {
-    animation: move-out 1s;
+    animation: move-out .5s;
   }
   @keyframes move-in {
     0% {
@@ -529,14 +529,14 @@
           </div>
           <div class="info">
             <div class="head">
-              <img class="headImg" :src="baseImgUrl + item.matchImg">
+              <img class="headImg" :src="item.wxImgUrl">
               <img class="headBg" src="../../../assets/images/rank-bg01.png">
             </div>
             <p class="nickname">{{ item.memberName}} <span>票数 {{ item.poll || 0}}</span></p>
             <p class="manifesto">参赛宣言：</p>
             <p class="content">{{ item.matchManifesto }}</p>
           </div>
-          <template v-if="activityStatus">
+          <template v-if="activityStatus === '1'">
             <button @click="support(item.memberId)">
               <img src="../../../assets/images/gift.png">
               为TA加油
@@ -553,7 +553,7 @@
             </div>
             <div class="info">
               <div class="head">
-                <img class="headImg" :src="baseImgUrl + item.matchImg">
+                <img class="headImg" :src="item.wxImgUrl">
                 <img class="headBg" src="../../../assets/images/rank-bg02.png">
               </div>
               <div class="info-detail">
@@ -562,7 +562,7 @@
               </div>
             </div>
             <div class="support">
-              <template v-if="activityStatus">
+              <template v-if="activityStatus === '1'">
                 <button @click="support(item.memberId)">
                   <img src="../../../assets/images/gift.png">
                   为TA加油
@@ -583,7 +583,7 @@
             </div>
             <div class="info">
               <div class="head">
-                <img class="headImg" :src="baseImgUrl + item.matchImg">
+                <img class="headImg" :src="item.wxImgUrl">
                 <img class="headBg" src="../../../assets/images/rank-bg03.png">
               </div>
               <div class="info-detail">
@@ -592,7 +592,7 @@
               </div>
             </div>
             <div class="support">
-              <template v-if="activityStatus">
+              <template v-if="activityStatus === '1'">
                 <button @click="support(item.memberId)">
                   <img src="../../../assets/images/gift.png">
                   为TA加油
@@ -610,14 +610,14 @@
           <div class="top">
             <div class="info">
               <span class="rank">NO.{{ index + 1 }}</span>
-              <img class="headImg" :src="baseImgUrl + item.matchImg">
+              <img class="headImg" :src="item.wxImgUrl">
               <div class="info-detail">
                 <span class="name">{{ item.memberName }}</span>
                 <span class="tickets">票数 {{ item.poll || 0 }}</span>
               </div>
             </div>
             <div class="support">
-              <template v-if="activityStatus">
+              <template v-if="activityStatus === '1'">
                 <button @click="support(item.memberId)">
                   <img src="../../../assets/images/gift.png">
                   为TA加油

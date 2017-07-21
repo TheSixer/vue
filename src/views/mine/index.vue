@@ -24,6 +24,7 @@
         width: 121 / @pxtorem;
         height: 121 / @pxtorem;
         margin-right: 10 / @pxtorem;
+        border-radius: 50%;
       }
       .name {
         display: flex;
@@ -41,6 +42,9 @@
           height: 40 / @pxtorem;
           font-size: 26 / @pxtorem;
           color: @white;
+          a {
+            color: #fff;
+          }
         }
       }
     }
@@ -55,6 +59,9 @@
       .balance {
         font-size: 32 / @pxtorem;
         color: @white;
+        a {
+          color: #fff;
+        }
       }
       .operation {
         display: flex;
@@ -107,20 +114,28 @@
   <div class="personal">
     <header class="header">
       <div class="info">
-        <img src="../../assets/images/userHead.png">
+        <router-link to="/mine/myinfo">
+          <img :src="member.wxImgUrl">
+        </router-link>
         <div class="name">
-          <span class="nickname">一懒众衫小</span>
+          <span class="nickname">{{ member.nickName }}</span>
           <div class="myId">
-            <span>ID: 12342314234</span>
-            <span>美分：2000</span>
+            <span>ID: {{ member.id }}</span>
+            <router-link to="/mine/integral-record">
+              <span>美分：{{ member.integral }}</span>
+            </router-link>
           </div>
         </div>
       </div>
       <div class="tab">
-        <div class="balance">余额： ¥1000</div>
+        <div class="balance">
+          <router-link to="/mine/balance-record">
+            余额： ¥{{ member.balance }}
+          </router-link>
+        </div>
         <div class="operation">
-          <router-link to="">充值</router-link>
-          <router-link to="">提现</router-link>
+          <router-link to="/mine/recharge">充值</router-link>
+          <router-link to="/mine/withdraw">提现</router-link>
         </div>
       </div>
     </header>
@@ -131,7 +146,7 @@
           <img src="../../assets/images/myOrder.png">
           <span>我的订单<i></i></span>
         </router-link>
-        <router-link to="" class="item-tab">
+        <router-link to="/mine/follow" class="item-tab">
           <img src="../../assets/images/myFollow.png">
           <span>我的关注<i></i></span>
         </router-link>
@@ -155,6 +170,10 @@
           <img src="../../assets/images/myExchange.png">
           <span>我的兑换<i></i></span>
         </router-link>
+        <router-link to="" class="item-tab">
+          <img src="../../assets/images/myExchange.png">
+          <span>我的背包<i></i></span>
+        </router-link>
       </div>
     </div>
 
@@ -164,14 +183,39 @@
 
 <script>
 import Guide from '@/components/footer/index'
+import { mapState, mapActions } from 'vuex'
+import { getUserInfo } from '@/api/service'
 export default {
   data () {
     return {
-
+      member: {}
     }
   },
   components: {
     Guide
+  },
+  computed: {
+    ...mapState([
+      'memberId'
+    ])
+  },
+  mounted () {
+    this.getUserMemberId()
+    this.initData()
+  },
+  methods: {
+    ...mapActions([
+      'getUserMemberId'
+    ]),
+    async initData () {
+      await getUserInfo({
+        memberId: this.memberId
+      }).then(res => {
+        if (res.data.code === '200') {
+          this.member = res.data.member
+        }
+      })
+    }
   }
 }
 </script>

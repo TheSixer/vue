@@ -117,7 +117,7 @@
                 <div class="num">
                   <p class="sum">
                     <span class="count">￥<i>{{ gift.price }}</i>.00</span>
-                    <span class="origin">￥128.00</span>
+                    <!-- <span class="origin">￥128.00</span> -->
                   </p>
                   <span class="ti">+{{ gift.poll }}票</span>
                 </div>

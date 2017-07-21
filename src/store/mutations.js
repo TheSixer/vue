@@ -12,6 +12,9 @@ export default {
   [Types.TITLE]: (state, data) => {
     state.title = data
   },
+  [Types.GET_CURRENTUSER_MEMBERID]: (state, data) => {
+    state.memberId = data
+  },
   [Types.RECORD_QINIUTOKEN]: (state, data) => {
     state.qiniuToken = data
   }

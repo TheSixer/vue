@@ -408,7 +408,7 @@ export default {
         pagination: '.swiper-pagination',
         paginationClickable: true
       },
-      listStatus: '暂无活动信息~'
+      listStatus: '加载中...'
     }
   },
   components: {
@@ -418,6 +418,7 @@ export default {
   },
   mounted () {
     //  获取孔雀会首页数据
+    this.loading()
     this.getIndexInfo()
   },
   watch: {
@@ -438,8 +439,8 @@ export default {
     }
   },
   methods: {
-    getIndexInfo () {
-      kongquehui({
+    async getIndexInfo () {
+      await kongquehui({
         status: this.status,
         flag: this.flag,
         specId: this.specId

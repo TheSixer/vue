@@ -45,11 +45,16 @@ util.http.interceptors.response.use(
             path: 'login',
             query: {redirect: router.currentRoute.fullPath}
           })
+          break
+        case 403:
+          //  403 token 不存在，跳转授权页面
+          location.href = config.api + '/api/core/login'
+          break
       }
     }
     // console : Error: Request failed with status code 402
     console.log(error)
-    return Promise.reject(error.response.data)
+    return Promise.reject(error.response.message)
   })
 
 export default util

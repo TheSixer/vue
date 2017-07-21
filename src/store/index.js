@@ -8,6 +8,7 @@ import UsersModule from './modules/usersModule'
 Vue.use(Vuex)
 
 const state = {
+  memberId: '',
   qiniuToken: null,
   user: {},
   token: null,

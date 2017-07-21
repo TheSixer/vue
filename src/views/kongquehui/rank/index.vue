@@ -4,11 +4,14 @@
 .Rank {
   .header {
     position: relative;
-    button {
+    .back {
       position: absolute;
       top: 20 / @pxtorem;
-      left: 20 / @pxtorem;
-
+      left: 0;
+      width: 61 / @pxtorem;
+      height: 77 / @pxtorem;
+      padding: 20 / @pxtorem;
+      background: none;
       img {
         width: 21 / @pxtorem;
         height: 37 / @pxtorem;
@@ -54,6 +57,11 @@
         .ivu-tabs-tabpane {
           background: #f0f0f0;
           .day-header {
+            .swiper-pagination {
+              .swiper-pagination-bullet-active {
+                background: #FFF;
+              }
+            }
             img {
               width: 100%;
               height: auto;
@@ -118,6 +126,7 @@
                   margin: 0 auto;
                   .headImg {
                     width: 135 / @pxtorem;
+                    border-radius: 50%;
                   }
                   .headBg {
                     position: absolute;
@@ -203,6 +212,7 @@
                     text-align: center;
                     .headImg {
                       width: 118 / @pxtorem;
+                      border-radius: 50%;
                     }
                     .headBg {
                       position: absolute;
@@ -285,6 +295,7 @@
                     width: 89 / @pxtorem;
                     height: 89 / @pxtorem;
                     margin-right: 15 / @pxtorem;
+                    border-radius: 50%;
                   }
                   .info-detail {
                     display: flex;
@@ -370,7 +381,15 @@
       <Tabs value="type" v-model="type">
         <Tab-pane label="日榜" name="day">
           <div class="day-header">
-            <img src="../../../assets/images/home-bg.png" alt="">
+            <swiper :options="swiperOption" ref="mySwiper">
+              <!-- slides -->
+              <swiper-slide v-for="(item, index) in monthActivity.activityPicList" :key="item.id">
+                <img :src="baseImgUrl + item.picKey">
+              </swiper-slide>
+              <!-- Optional controls -->
+                <div class="swiper-pagination"  slot="pagination"></div>
+            </swiper>
+
             <div class="list">
               <router-link to="">
                 往期记录
@@ -388,18 +407,21 @@
                 </div>
                 <div class="info">
                   <div class="head">
-                    <img class="headImg" src="../../../assets/images/userHead.png">
+                    <img class="headImg" :src="item.wxImgUrl">
                     <img class="headBg" src="../../../assets/images/rank-bg01.png">
                   </div>
-                  <p class="nickname">一懒众衫小 <span>票数2800</span></p>
+                  <p class="nickname">{{ item.name }} <span>票数 {{ item.poll || 0 }}</span></p>
                   <p class="manifesto">参赛宣言：</p>
-                  <p class="content">狭路相逢勇者胜！ oh yeah...</p>
+                  <p class="content">{{ item.matchManifesto }}</p>
                 </div>
-                <!--<button>
+
+                <button @click="support(item.memberId)">
                   <img src="../../../assets/images/gift.png">
                   为TA加油
-                </button>-->
-                <img class="win" src="../../../assets/images/win.png">
+                </button>
+                <!-- <template v-if="item.prizeStatus">
+                  <img class="win" src="../../../assets/images/win.png">
+                </template> -->
               </div>
               <div class="second" v-else-if="index === 1">
                 <div class="top">
@@ -408,24 +430,26 @@
                   </div>
                   <div class="info">
                     <div class="head">
-                      <img class="headImg" src="../../../assets/images/userHead.png">
+                      <img class="headImg" :src="item.wxImgUrl">
                       <img class="headBg" src="../../../assets/images/rank-bg02.png">
                     </div>
                     <div class="info-detail">
-                      <span class="name">一懒众衫小</span>
-                      <span class="tickets">票数2600</span>
+                      <span class="name">{{ item.name }}</span>
+                      <span class="tickets">票数 {{ item.poll || 0 }}</span>
                     </div>
                   </div>
                   <div class="support">
-                    <!--<button>
+                    <button @click="support(item.memberId)">
                       <img src="../../../assets/images/gift.png">
                       为TA加油
-                    </button>-->
+                    </button>
                   </div>
-                  <img class="win" src="../../../assets/images/win.png">
+                  <!-- <template v-if="item.prizeStatus">
+                    <img class="win" src="../../../assets/images/win.png">
+                  </template> -->
                 </div>
                 <p class="manifesto">参赛宣言：</p>
-                <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
+                <p class="content">{{ item.matchManifesto }}</p>
               </div>
               <div class="second" v-else-if="index === 2">
                 <div class="top">
@@ -434,52 +458,66 @@
                   </div>
                   <div class="info">
                     <div class="head">
-                      <img class="headImg" src="../../../assets/images/userHead.png">
+                      <img class="headImg" :src="item.wxImgUrl">
                       <img class="headBg" src="../../../assets/images/rank-bg03.png">
                     </div>
                     <div class="info-detail">
-                      <span class="name">一懒众衫小</span>
-                      <span class="tickets">票数2600</span>
+                      <span class="name">{{ item.name }}</span>
+                      <span class="tickets">票数 {{ item.poll || 0 }}</span>
                     </div>
                   </div>
                   <div class="support">
-                    <!--<button>
-                      <img src="../../../assets/images/gift.png">
-                      为TA加油
-                    </button>-->
+                    <template v-if="activityStatus">
+                      <button @click="support(item.memberId)">
+                        <img src="../../../assets/images/gift.png">
+                        为TA加油
+                      </button>
+                    </template>
                   </div>
-                  <img class="win" src="../../../assets/images/win.png">
+                  <!-- <template v-if="item.prizeStatus">
+                    <img class="win" src="../../../assets/images/win.png">
+                  </template> -->
                 </div>
                 <p class="manifesto">参赛宣言：</p>
-                <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
+                <p class="content">{{ item.matchManifesto }}</p>
               </div>
               <div class="others" v-else>
                 <div class="top">
                   <div class="info">
                     <span class="rank">NO.4</span>
-                    <img class="headImg" src="../../../assets/images/userHead.png">
+                    <img class="headImg" :src="item.wxImgUrl">
                     <div class="info-detail">
-                      <span class="name">一懒众衫小</span>
-                      <span class="tickets">票数2600</span>
+                      <span class="name">{{ item.name }}</span>
+                      <span class="tickets">票数 {{ item.poll || 0 }}</span>
                     </div>
                   </div>
                   <div class="support">
-                    <!--<button>
+                    <button @click="support(item.memberId)">
                       <img src="../../../assets/images/gift.png">
                       为TA加油
-                    </button>-->
+                    </button>
                   </div>
                 </div>
                 <p class="manifesto">参赛宣言：</p>
-                <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
-                <img class="win" src="../../../assets/images/win.png">
+                <p class="content">{{ item.matchManifesto }}</p>
+                <!-- <template v-if="item.prizeStatus">
+                  <img class="win" src="../../../assets/images/win.png">
+                </template> -->
               </div>
             </template>
           </div>
         </Tab-pane>
         <Tab-pane label="月榜" name="month">
           <div class="day-header">
-            <img src="../../../assets/images/home-bg.png" alt="">
+            <swiper :options="swiperOption" ref="mySwiper">
+              <!-- slides -->
+              <swiper-slide v-for="(item, index) in monthActivity.activityPicList" :key="item.id">
+                <img :src="baseImgUrl + item.picKey">
+              </swiper-slide>
+              <!-- Optional controls -->
+                <div class="swiper-pagination"  slot="pagination"></div>
+            </swiper>
+
             <div class="list">
               <router-link to="">
                 往期记录
@@ -490,53 +528,34 @@
             </div>
           </div>
           <div class="dayBody">
-            <div class="others">
+            <div class="others" v-for="(item, index) in monthMemberList">
               <div class="top">
                 <div class="info">
-                  <span class="rank">NO.1</span>
-                  <img class="headImg" src="../../../assets/images/userHead.png">
+                  <span class="rank">NO.{{ index + 1 }}</span>
+                  <img class="headImg" :src="item.wxImgUrl">
                   <div class="info-detail">
-                    <span class="name">一懒众衫小</span>
-                    <span class="tickets">票数2600</span>
+                    <span class="name">{{ item.name }}</span>
+                    <span class="tickets">票数{{ item.poll || 0 }}</span>
                   </div>
                 </div>
                 <div class="support">
-                  <!--<button>
+                  <button>
                     <img src="../../../assets/images/gift.png">
                     为TA加油
-                  </button>-->
+                  </button>
                 </div>
               </div>
               <p class="manifesto">参赛宣言：</p>
-              <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
-              <img class="win" src="../../../assets/images/win.png">
-            </div>
-            <div class="others">
-              <div class="top">
-                <div class="info">
-                  <span class="rank">NO.2</span>
-                  <img class="headImg" src="../../../assets/images/userHead.png">
-                  <div class="info-detail">
-                    <span class="name">一懒众衫小</span>
-                    <span class="tickets">票数2600</span>
-                  </div>
-                </div>
-                <div class="support">
-                  <!--<button>
-                    <img src="../../../assets/images/gift.png">
-                    为TA加油
-                  </button>-->
-                </div>
-              </div>
-              <p class="manifesto">参赛宣言：</p>
-              <p class="content">宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容宣言内容</p>
-              <img class="win" src="../../../assets/images/win.png">
+              <p class="content">{{ item.matchManifesto }}</p>
+              <!-- <template v-if="item.prizeStatus">
+                <img class="win" src="../../../assets/images/win.png">
+              </template> -->
             </div>
           </div>
         </Tab-pane>
       </Tabs>
 
-      <button @click="back">
+      <button @click="back" class="back">
         <img src="../../../assets/images/goBack.png">
       </button>
     </header>
@@ -545,17 +564,33 @@
 
 <script>
 import { getRank } from '@/api/service'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import config from '@/config/config'
 export default {
   data () {
     return {
       type: this.$route.params.type,
       baseImgUrl: config.qiniu.IMG_PATH,
-      dayActivity: null,
-      dayMemberList: null,
-      monthActivity: null,
-      monthMemberList: null
+      dayActivity: {
+        activityPicList: []
+      },
+      dayMemberList: [],
+      monthActivity: {
+        activityPicList: []
+      },
+      activityStatus: false,
+      monthMemberList: [],
+      swiperOption: {
+        autoplay: 3000,
+        loop: true,
+        pagination: '.swiper-pagination',
+        paginationClickable: true
+      }
     }
+  },
+  components: {
+    swiper,
+    swiperSlide
   },
   mounted () {
     this.initData()

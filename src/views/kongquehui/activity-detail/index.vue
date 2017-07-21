@@ -382,9 +382,9 @@
               </div>
               <div class="middle">
                 <ul>
-                  <li v-for="item in activity.activityMemberList" :key="item.id">
-                    <router-link to="" class="user">
-                      <img :src="baseImgUrl + item.matchImg">
+                  <li v-for="(item, index) in activity.activityMemberList" :key="item.id">
+                    <router-link :to="'/personal/'+ activity.id + '/' + item.memberId + '?rank=' + index" class="user">
+                      <img :src="item.wxImgUrl">
                     </router-link>
                   </li>
                 </ul>
@@ -461,7 +461,16 @@
         <img src="../../../assets/images/nomark.png">
         <!-- <img src="../../../assets/images/on-attention.png"> -->
       </button>
-      <button class="btn-join" @click="joinThisAct">报名参与</button>
+      <template v-if="matchStatus === 1 || matchStatus === 3">
+        <button class="btn-join" @click="joinThisAct" :disabled="matchStatus === 2">
+          立即参与
+        </button>
+      </template>
+      <template v-else>
+        <button class="btn-join" @click="logoutXiu">
+          退出秀
+        </button>
+      </template>
     </div>
   </div>
 </template>
@@ -469,10 +478,12 @@
 <script>
 import Heade from '@/components/wordHeader/wordHeader'
 import config from '@/config/config'
+import { mapState, mapActions } from 'vuex'
 import { activityDetailApi } from '@/api/service'
 export default {
   data () {
     return {
+      matchStatus: 0,
       activityId: this.$route.params.id,
       baseImgUrl: config.qiniu.IMG_PATH,
       activity: {
@@ -480,7 +491,6 @@ export default {
         activityStatus: null,
         activityMemberList: []
       },
-      activityMember: [],
       activityMoodList: []
     }
   },
@@ -493,27 +503,38 @@ export default {
       this.initData()
     }
   },
-  created () {
+  mounted () {
+    this.getUserMemberId()
     this.initData()
   },
   computed: {
+    ...mapState([
+      'memberId'
+    ]),
     memberCount () {
       return this.activity.activityMemberList.length || '0'
     }
   },
   methods: {
+    ...mapActions([
+      'getUserMemberId'
+    ]),
     async initData () {
       await activityDetailApi({
         activityId: this.$route.params.id,
-        memberId: '001'
+        memberId: this.memberId
       }).then(res => {
         if (res.status === 200) {
           console.log(res.data)
           this.activity = res.data.activity
-          this.activityMember = res.data.activityMember
           this.activityMoodList = res.data.activityMoodList
+          this.matchStatus = 0
+          // this.matchStatus = res.data.matchStatus
         }
       })
+    },
+    logoutXiu () {
+      alert('logout xiu')
     },
     joinThisAct () {
       this.$router.push({

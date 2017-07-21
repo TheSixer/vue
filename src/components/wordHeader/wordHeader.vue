@@ -20,6 +20,10 @@
         vertical-align: bottom;
       }
     }
+    span {
+      font-size: 32 / @pxtorem;
+      color: #333;
+    }
   }
 }
 
