@@ -16,16 +16,20 @@ const mine = r => require.ensure([], () => r(require('@/views/mine/index')), 'mi
 const myInfo = r => require.ensure([], () => r(require('@/views/mine/myInfo/index')), 'myInfo')
 const balanceRecord = r => require.ensure([], () => r(require('@/views/mine/balanceRecord/index')), 'balanceRecord')
 const integralRecord = r => require.ensure([], () => r(require('@/views/mine/integralRecord/index')), 'integralRecord')
-const withdraw = r => require.ensure([], () => r(require('@/views/mine/withdraw/index')), 'withdraw')
 const follow = r => require.ensure([], () => r(require('@/views/mine/follow/index')), 'follow')
+const collection = r => require.ensure([], () => r(require('@/views/mine/collection/index')), 'collection')
 const myBankCard = r => require.ensure([], () => r(require('@/views/mine/myBankCard/index')), 'myBankCard')
 const addBankCard = r => require.ensure([], () => r(require('@/views/mine/myBankCard/addBankCard/index')), 'addBankCard')
 const changePassword = r => require.ensure([], () => r(require('@/views/mine/changePassword/index')), 'changePassword')
 
 const safeShop = r => require.ensure([], () => r(require('@/views/easyShop/index')), 'easyShop')
 const commodityDetail = r => require.ensure([], () => r(require('@/views/easyShop/commodity-detail/index')), 'commodityDetail')
+const withdraw = r => require.ensure([], () => r(require('@/views/mine/withdraw/index')), 'withdraw')
+const payanother = r => require.ensure([], () => r(require('@/views/mine/payanother/payanother')), 'payanother')
+const servicestore = r => require.ensure([], () => r(require('@/views/mine/servicestore/servicestore')), 'servicestore')
+const payment = r => require.ensure([], () => r(require('@/views/mine/payment/payment')), 'payment')
 
-export default [ {
+export default [{
   path: '',
   meta: {
     title: 'Home'
@@ -34,43 +38,43 @@ export default [ {
 }, {
   path: '/kongquehui',
   meta: {
-    title: 'kongquehui'
+    title: '孔雀会'
   },
   component: kongquehui
 }, {
   path: '/safeshop',
   meta: {
-    title: 'safeShop'
+    title: '安全购'
   },
   component: safeShop
 }, {
   path: '/activity-detail/:id',
   meta: {
-    title: 'activityDetail'
+    title: '活动详情'
   },
   component: activityDetail
 }, {
   path: '/join-detail/:id',
   meta: {
-    title: 'join-detail'
+    title: '参与活动'
   },
   component: joinDetail
 }, {
   path: '/confirm-order',
   meta: {
-    title: 'confirm-order'
+    title: '确认订单'
   },
   component: confirmOrder
 }, {
   path: '/vote-gift',
   meta: {
-    title: 'vote-gift'
+    title: '赠送礼物'
   },
   component: voteGift
 }, {
   path: '/vote-giftBag',
   meta: {
-    title: 'vote-giftBag'
+    title: '赠送礼包'
   },
   component: voteGiftBag
 }, {
@@ -88,7 +92,7 @@ export default [ {
 }, {
   path: '/enroll/:id',
   meta: {
-    title: 'enroll'
+    title: '参与活动'
   },
   component: enroll
 }, {
@@ -106,7 +110,7 @@ export default [ {
 }, {
   path: '/mine/myinfo',
   meta: {
-    title: 'myinfo'
+    title: '我的信息'
   },
   component: myInfo
 }, {
@@ -124,7 +128,7 @@ export default [ {
 }, {
   path: '/mine/follow',
   meta: {
-    title: 'follow'
+    title: '我的关注'
   },
   component: follow
 }, {
@@ -133,6 +137,12 @@ export default [ {
     title: '提现'
   },
   component: withdraw
+}, {
+  path: '/mine/collection',
+  meta: {
+    title: '我的收藏'
+  },
+  component: collection
 }, {
   path: '/mine/my-bank-card',
   meta: {
@@ -157,4 +167,22 @@ export default [ {
     title: 'commodityDetail'
   },
   component: commodityDetail
+}, {
+  path: '/payanother',
+  meta: {
+    title: 'payanother'
+  },
+  component: payanother
+}, {
+  path: '/servicestore',
+  meta: {
+    title: 'servicestore'
+  },
+  component: servicestore
+}, {
+  path: '/payment',
+  meta: {
+    title: 'payment'
+  },
+  component: payment
 }]

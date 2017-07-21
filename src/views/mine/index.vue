@@ -150,7 +150,7 @@
           <img src="../../assets/images/myFollow.png">
           <span>我的关注<i></i></span>
         </router-link>
-        <router-link to="" class="item-tab">
+        <router-link to="/mine/collection" class="item-tab">
           <img src="../../assets/images/myCollection.png">
           <span>我的收藏<i></i></span>
         </router-link>
