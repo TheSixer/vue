@@ -14,6 +14,9 @@ const changepassword = r => require.ensure([], () => r(require('@/views/mine/cha
 const orderdetails = r => require.ensure([], () => r(require('@/views/mine/orderdetails/orderdetails')), 'orderdetails')
 const userrelations = r => require.ensure([], () => r(require('@/views/mine/userrelations/userrelations')), 'userrelations')
 const collection = r => require.ensure([], () => r(require('@/views/mine/collection/collection')), 'collection')
+const payanother = r => require.ensure([], () => r(require('@/views/mine/payanother/payanother')), 'payanother')
+const servicestore = r => require.ensure([], () => r(require('@/views/mine/servicestore/servicestore')), 'servicestore')
+const payment = r => require.ensure([], () => r(require('@/views/mine/payment/payment')), 'payment')
 export default [{
   path: '',
   meta: {
@@ -110,4 +113,22 @@ export default [{
     title: 'collection'
   },
   component: collection
+}, {
+  path: '/payanother',
+  meta: {
+    title: 'payanother'
+  },
+  component: payanother
+}, {
+  path: '/servicestore',
+  meta: {
+    title: 'servicestore'
+  },
+  component: servicestore
+}, {
+  path: '/payment',
+  meta: {
+    title: 'payment'
+  },
+  component: payment
 }]
