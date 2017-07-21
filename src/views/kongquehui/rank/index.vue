@@ -569,7 +569,7 @@ import config from '@/config/config'
 export default {
   data () {
     return {
-      type: this.$route.params.type,
+      type: this.$route.query.type,
       baseImgUrl: config.qiniu.IMG_PATH,
       dayActivity: {
         activityPicList: []

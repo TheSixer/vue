@@ -24,6 +24,6 @@ export default {
     commit,
     state
   }) {
-    commit(GET_CURRENTUSER_MEMBERID, '001')
+    commit(GET_CURRENTUSER_MEMBERID, '000101')
   }
 }

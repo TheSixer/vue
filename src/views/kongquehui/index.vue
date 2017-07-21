@@ -357,10 +357,10 @@
       </Select>
 
       <div class="rank-link">
-        <router-link to="">
+        <router-link to="/rank?type=day">
           日榜
         </router-link>
-        <router-link to="">
+        <router-link to="/rank?type=month">
           月榜
         </router-link>
       </div>
