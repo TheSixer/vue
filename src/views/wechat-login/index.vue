@@ -20,6 +20,10 @@ export default {
       if (this.$route.params.token) {
         this.token = this.$route.params.token
         localStorage.token = this.$route.params.token
+        this.$router.replace({
+          path: '/',
+          query: {}
+        })
       }
     },
     setToken () {

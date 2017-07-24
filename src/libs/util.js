@@ -23,6 +23,7 @@ util.http.interceptors.request.use(
   config => {
     if (localStorage.token) {
       const token = localStorage.token
+      alert(token)
       config.headers.Authorization = `token ${token}`
     }
     return config
