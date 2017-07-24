@@ -60,7 +60,7 @@ export const myCollect = data => Util.http.get('/member_collect/list/', {})
 //  添加收藏
 export const addCollect = data => Util.http.post('/member_collect/add', data, {})
 //  取消收藏
-export const cancleCollect = data => Util.http.delete('/member_collect/cancal', {})
+export const cancleCollect = data => Util.http.delete('/member_collect/cancal_activity?activityId=' + data.activityId, {})
 //  我的活动
 export const getMyActivity = data => Util.http.get('/activity_member/my', {})
 //  谁为我投票
@@ -73,3 +73,5 @@ export const getStoreInfo = data => Util.http.get('/store/list', {})
 export const getPersonalInfo = data => Util.http.get('/activity/page?otherMemberId=' + data.otherMemberId + '&activityId=' + data.activityId, {})
 //  个人主页详情
 export const getUserInfoDetail = data => Util.http.get('/activity/page_detail?activityId=' + data.activityId, {})
+//  取消收藏
+// export const cancleCollect = data => Util.http.delete('/member_collect/cancal', {})

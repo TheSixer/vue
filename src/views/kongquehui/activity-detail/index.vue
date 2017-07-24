@@ -545,7 +545,7 @@ export default {
     },
     cancleCollect () {
       cancleCollect({
-        collectIds: this.activity.id
+        activityId: this.activity.id
       }).then(res => {
         if (res.data.code === '200') {
           this.collectStatus = !this.collectStatus
