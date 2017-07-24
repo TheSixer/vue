@@ -1,6 +1,8 @@
 import Util from '@/libs/util'
 //  登录
 export const login = data => Util.http.get('/api/login?userName=' + data.userName + '&password=' + data.password, {})
+// 短信验证码
+export const sentCode = data => Util.http.get('/member/sendCode?phone=' + data.phone, {})
 //  孔雀会主页
 export const kongquehui = data => Util.http.get('/activity/index?status=' + data.status + '&flag=' + data.flag + '&specId=' + data.specId, {})
 //  获取七牛存储Token

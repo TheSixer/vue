@@ -8,7 +8,7 @@ let util = {
 
 }
 util.title = (title) => {
-  title = title ? title + ' - 致美' : 'iView project'
+  title = title || '致美'
   window.document.title = title
 }
 
@@ -21,8 +21,10 @@ util.http = axios.create({
 // http request 拦截器
 util.http.interceptors.request.use(
   config => {
-    if (store.state.token) {
-      config.headers.Authorization = `token ${store.state.token}`
+    const token = localStorage.getItem('token')
+
+    if (token) {
+      config.headers.Authorization = `token ${token}`
     }
     return config
   },
@@ -46,9 +48,16 @@ util.http.interceptors.response.use(
             query: {redirect: router.currentRoute.fullPath}
           })
           break
+        case 402:
+          // 402 用户未注册跳转注册页面
+          router.replace({
+            path: '/bind',
+            query: {}
+          })
+          break
         case 403:
           //  403 token 不存在，跳转授权页面
-          location.href = config.api + '/api/core/login'
+          location.href = config.loginUrl + '/api/core/login'
           break
       }
     }

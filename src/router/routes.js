@@ -1,6 +1,7 @@
 
 const home = r => require.ensure([], () => r(require('@/views/home/index')), 'home')
 
+const bind = r => require.ensure([], () => r(require('@/views/bind/index')), 'bind')
 const kongquehui = r => require.ensure([], () => r(require('@/views/kongquehui/index')), 'kongquehui')
 const enroll = r => require.ensure([], () => r(require('@/views/kongquehui/enroll/index')), 'enroll')
 const activityDetail = r => require.ensure([], () => r(require('@/views/kongquehui/activity-detail/index')), 'activityDetail')
@@ -34,9 +35,15 @@ const payment = r => require.ensure([], () => r(require('@/views/mine/payment/pa
 export default [{
   path: '',
   meta: {
-    title: 'Home'
+    title: '致美'
   },
   component: home
+}, {
+  path: '/bind',
+  meta: {
+    title: '绑定'
+  },
+  component: bind
 }, {
   path: '/kongquehui',
   meta: {

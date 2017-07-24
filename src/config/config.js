@@ -1,10 +1,12 @@
 import Env from './env'
 
 const ajaxUrl = Env === 'development'
-  ? 'http://localhost/api'
+  ? 'http://zhimei.com/api/wechat'
   : Env === 'production'
-  ? 'http://liling.wmeimob.com/api'
+  ? 'http://liling.wmeimob.com/api/wechat'
   : 'https://debug.url.com'
+
+const loginUrl = 'http://liling.wmeimob.com'
 
 const qiniu = {
   'URL': 'http://upload.qiniu.com/',
@@ -18,6 +20,7 @@ const qiniu = {
 
 let config = {
   api: ajaxUrl,
-  qiniu: qiniu
+  qiniu: qiniu,
+  loginUrl
 }
 export default config

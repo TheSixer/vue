@@ -9,9 +9,7 @@ export default {
     commit,
     state
   }) {
-    await getQiniuToken({
-
-    }).then(res => {
+    await getQiniuToken({}).then(res => {
       if (res.data.uptoken) {
         const token = {
           token: res.data.uptoken
@@ -24,6 +22,8 @@ export default {
     commit,
     state
   }) {
+    // const token = localStorage.getItem('token')
+
     commit(GET_CURRENTUSER_MEMBERID, '000101')
   }
 }
