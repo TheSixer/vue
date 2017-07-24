@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import { sentCode } from '@/api/service'
+import { sentCode, register } from '@/api/service'
 export default {
   data () {
     return {
@@ -47,9 +47,14 @@ export default {
     bindSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.$Message.success('提交成功!')
+          register({
+            phone: this.formBind.phone,
+            verifyCode: this.formBind.code
+          }).then(res => {
+            console.log(res)
+          })
         } else {
-          this.$Message.error('表单验证失败!')
+          this.$Message.error('信息填写不正确!')
         }
       })
     },

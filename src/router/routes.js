@@ -1,6 +1,8 @@
 
 const home = r => require.ensure([], () => r(require('@/views/home/index')), 'home')
 
+const wechatLogin = r => require.ensure([], () => r(require('@/views/wechat-login/index')), 'wechatLogin')
+
 const bind = r => require.ensure([], () => r(require('@/views/bind/index')), 'bind')
 const kongquehui = r => require.ensure([], () => r(require('@/views/kongquehui/index')), 'kongquehui')
 const enroll = r => require.ensure([], () => r(require('@/views/kongquehui/enroll/index')), 'enroll')
@@ -38,6 +40,12 @@ export default [{
     title: '致美'
   },
   component: home
+}, {
+  path: '/wechat/login/:token',
+  meta: {
+    title: '绑定'
+  },
+  component: wechatLogin
 }, {
   path: '/bind',
   meta: {
