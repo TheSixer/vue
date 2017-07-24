@@ -21,9 +21,8 @@ util.http = axios.create({
 // http request 拦截器
 util.http.interceptors.request.use(
   config => {
-    const token = localStorage.getItem('token')
 
-    if (token) {
+    if (localStorage.token) {
       config.headers.Authorization = `token ${token}`
     }
     return config
