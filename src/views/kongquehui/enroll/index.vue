@@ -125,7 +125,6 @@ export default {
       uploadConfig: config.qiniu,
       formEnroll: {
         activityId: this.$route.params.id,
-        memberId: '001',
         memberName: '',
         memberPhone: '',
         matchManifesto: '',
@@ -161,9 +160,6 @@ export default {
     ...mapState([
       'qiniuToken'
     ])
-  },
-  created () {
-    console.log('aaa')
   },
   methods: {
     ...mapActions([

@@ -392,6 +392,7 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+      z-index: 999;
       button {
         width: 100%;
         height: 98 / @pxtorem;
@@ -484,53 +485,63 @@
 
       <Tabs value="name1">
           <Tab-pane label="谁为我投票" name="name1">
-            <ul class="list-items">
-              <li v-for="item in pollList" :key="item.id">
-                <div class="list-item">
-                  <div class="user-info">
-                    <img :src="item.memberImg">
-                    <span>{{ item.name }}</span>
+            <template v-if="!pollList.length">
+              <p>还没有人投票，快点支持我一下吧~</p>
+            </template>
+            <template v-else>
+              <ul class="list-items">
+                <li v-for="item in pollList" :key="item.id">
+                  <div class="list-item">
+                    <div class="user-info">
+                      <img :src="item.memberImg">
+                      <span>{{ item.name }}</span>
+                    </div>
+                    <div class="other-info">
+                      <span class="order">投了<i>{{ item.pollCount }}</i>票</span>
+                      <span class="date">{{ item.createdAt | moment }}</span>
+                    </div>
                   </div>
-                  <div class="other-info">
-                    <span class="order">投了<i>{{ item.pollCount }}</i>票</span>
-                    <span class="date">{{ item.createdAt | moment }}</span>
-                  </div>
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </template>
           </Tab-pane>
           <Tab-pane label="贡献榜" name="name2">
-            <ul class="list-items">
-              <li v-for="(item, index) of pollCountList" v-bind:key="item.id">
-                <div class="list-item">
-                  <div class="rank">
-                    <template v-if="index === 0">
-                      <img src="../../../assets/images/rank01.png">
-                    </template>
-                    <template v-else-if="index === 1">
-                      <img src="../../../assets/images/rank02.png">
-                    </template>
-                    <template v-else-if="index === 2">
-                      <img src="../../../assets/images/rank03.png">
-                    </template>
-                    <template v-else>
-                      NO.
-                    </template>
-                    {{ index + 1 }}
+            <template v-if="!pollCountList.length">
+              <p>还没有人参与活动~</p>
+            </template>
+            <template v-else>
+              <ul class="list-items">
+                <li v-for="(item, index) of pollCountList" v-bind:key="item.id">
+                  <div class="list-item">
+                    <div class="rank">
+                      <template v-if="index === 0">
+                        <img src="../../../assets/images/rank01.png">
+                      </template>
+                      <template v-else-if="index === 1">
+                        <img src="../../../assets/images/rank02.png">
+                      </template>
+                      <template v-else-if="index === 2">
+                        <img src="../../../assets/images/rank03.png">
+                      </template>
+                      <template v-else>
+                        NO.
+                      </template>
+                      {{ index + 1 }}
+                    </div>
+                    <div class="user-info">
+                      <img :src="item.memberImg">
+                      <span>{{ item.name }}</span>
+                    </div>
+                    <div class="other-info">
+                      <div class="alone">支持票数：<i>{{ item.pollCount }}</i></div>
+                    </div>
                   </div>
-                  <div class="user-info">
-                    <img :src="item.memberImg">
-                    <span>{{ item.name }}</span>
-                  </div>
-                  <div class="other-info">
-                    <div class="alone">支持票数：<i>{{ item.pollCount }}</i></div>
-                  </div>
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </template>
           </Tab-pane>
       </Tabs>
-      <div class="seeMore">
+      <div class="seeMore" v-if="pollCountList.length || pollList.length">
         <router-link :to="'/supporter/' + activity.id + '/' + activityMember.memberId">
           <span>查看更多</span>
           <img src="../../../assets/images/arrow-down.png">
@@ -584,7 +595,7 @@
 import GiftModal from '@/components/giftModal/index'
 import config from '@/config/config'
 import { mapState, mapActions } from 'vuex'
-import { getPersonalInfo, addAttention } from '@/api/service'
+import { getPersonalInfo, addAttention, cancleAttention } from '@/api/service'
 export default {
   data () {
     return {
@@ -623,7 +634,6 @@ export default {
     ]),
     async initData () {
       await getPersonalInfo({
-        memberId: this.memberId,
         otherMemberId: this.$route.params.id,
         activityId: this.$route.params.actId
       }).then(res => {
@@ -648,18 +658,26 @@ export default {
     },
     async attention () {
       await addAttention({
-        memberId: this.memberId,
         memberAttentionId: this.activityMember.memberId
       }).then(res => {
-        console.log(res)
+        if (res.data.code === '200') {
+          this.attentionStatus = !this.attentionStatus
+          this.$Message.success('已关注！')
+        } else {
+          this.$Message.error(res.data.message)
+        }
       })
     },
     async cancleAttention () {
-      await addAttention({
-        memberId: this.memberId,
+      await cancleAttention({
         memberAttentionId: this.activityMember.memberId
       }).then(res => {
-        console.log(res)
+        if (res.data.code === '200') {
+          this.attentionStatus = !this.attentionStatus
+          this.$Message.success('已取消关注！')
+        } else {
+          this.$Message.error(res.data.message)
+        }
       })
     },
     joinActivity () {

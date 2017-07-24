@@ -21,7 +21,7 @@
                   <span class="uTab">{{ item.memberFirstName }}</span>
                 </div>
                 <div class="other-info">
-                  <button>- 取消关注</button>
+                  <button @click="cancleAttention(item.memberId)">- 取消关注</button>
                 </div>
               </div>
             </li>
@@ -48,8 +48,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
-import { myAttention } from '@/api/service'
+import { myAttention, cancleAttention } from '@/api/service'
 export default {
   data () {
     return {
@@ -57,27 +56,30 @@ export default {
       attentionList: []
     }
   },
-  computed: {
-    ...mapState([
-      'memberId'
-    ])
-  },
   mounted () {
-    this.getUserMemberId()
     this.initData()
   },
   methods: {
-    ...mapActions([
-      'getUserMemberId'
-    ]),
     async initData () {
-      await myAttention({
-        memberId: this.memberId
-      }).then(res => {
-        console.log(res)
+      await myAttention({}).then(res => {
         if (res.data.code === '200') {
           this.memberList = res.data.memberList
           this.attentionList = res.data.attentionList
+        }
+      })
+    },
+    async cancleAttention (mId) {
+      await cancleAttention({
+        memberAttentionId: mId
+      }).then(res => {
+        if (res.data.code === '200') {
+          this.$Message.success('已取消关注！')
+
+          setTimeout(function () {
+            this.initData()
+          }, 1000)
+        } else {
+          this.$Message.error(res.data.message)
         }
       })
     },

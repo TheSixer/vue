@@ -727,7 +727,6 @@ export default {
   methods: {
     async initData () {
       await joinDetail({
-        memberId: '001',
         activityId: this.activityId
       }).then(res => {
         if (res.data.code === '200') {
@@ -736,10 +735,7 @@ export default {
         }
       })
       //  获取免费票、礼物、礼包
-      await getMyPoll({
-        memberId: '001'
-      }).then(res => {
-        console.log(res.data)
+      await getMyPoll({}).then(res => {
         if (res.data.code === '200') {
           this.member = res.data.member
           this.giftList = res.data.giftList
@@ -764,7 +760,6 @@ export default {
       }
 
       voteGratis({
-        memberId: '001',
         pollMemberId: this.pollMemberId,
         activityId: this.activityId
       }).then(res => {

@@ -122,7 +122,7 @@
           <div class="myId">
             <span>ID: {{ member.id }}</span>
             <router-link to="/mine/integral-record">
-              <span>美分：{{ member.integral }}</span>
+              <span>美分：{{ member.integral || 0 }}</span>
             </router-link>
           </div>
         </div>
@@ -130,7 +130,7 @@
       <div class="tab">
         <div class="balance">
           <router-link to="/mine/balance-record">
-            余额： ¥{{ member.balance }}
+            余额： ¥{{ member.balance || 0 }}
           </router-link>
         </div>
         <div class="operation">
@@ -183,7 +183,6 @@
 
 <script>
 import Guide from '@/components/footer/index'
-import { mapState, mapActions } from 'vuex'
 import { getUserInfo } from '@/api/service'
 export default {
   data () {
@@ -194,23 +193,12 @@ export default {
   components: {
     Guide
   },
-  computed: {
-    ...mapState([
-      'memberId'
-    ])
-  },
   mounted () {
-    this.getUserMemberId()
     this.initData()
   },
   methods: {
-    ...mapActions([
-      'getUserMemberId'
-    ]),
     async initData () {
-      await getUserInfo({
-        memberId: this.memberId
-      }).then(res => {
+      await getUserInfo({}).then(res => {
         if (res.data.code === '200') {
           this.member = res.data.member
         }

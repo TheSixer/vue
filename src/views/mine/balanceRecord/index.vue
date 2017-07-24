@@ -67,7 +67,6 @@
 
 <script>
 import Heade from '@/components/wordHeader/wordHeader'
-import { mapState, mapActions } from 'vuex'
 import { getAccountRecord } from '@/api/service'
 export default {
   data () {
@@ -80,23 +79,12 @@ export default {
   components: {
     Heade
   },
-  computed: {
-    ...mapState([
-      'memberId'
-    ])
-  },
   mounted () {
-    this.getUserMemberId()
     this.initData()
   },
   methods: {
-    ...mapActions([
-      'getUserMemberId'
-    ]),
     async initData () {
-      await getAccountRecord({
-        memberId: this.memberId
-      }).then(res => {
+      await getAccountRecord({}).then(res => {
         if (res.data.code === '200') {
           this.consumeLogList = res.data.consumeLogList
           this.rechargeLogList = res.data.rechargeLogList

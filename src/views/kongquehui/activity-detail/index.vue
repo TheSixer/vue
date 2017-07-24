@@ -457,11 +457,17 @@
         <img src="../../../assets/images/share.png">
         <!-- <img src="../../../assets/images/share.png"> -->
       </button>
-      <button class="follow">
-        <img src="../../../assets/images/nomark.png">
-        <!-- <img src="../../../assets/images/on-attention.png"> -->
-      </button>
-      <template v-if="matchStatus === 1 || matchStatus === 3">
+      <template v-if="collectStatus">
+        <button class="follow" @click="cancleCollect">
+          <img src="../../../assets/images/on-attention.png">
+        </button>
+      </template>
+      <template v-else>
+        <button class="follow" @click="collect">
+          <img src="../../../assets/images/nomark.png">
+        </button>
+      </template>
+      <template v-if="matchStatus !== 0">
         <button class="btn-join" @click="joinThisAct" :disabled="matchStatus === 2">
           立即参与
         </button>
@@ -478,12 +484,12 @@
 <script>
 import Heade from '@/components/wordHeader/wordHeader'
 import config from '@/config/config'
-import { mapState, mapActions } from 'vuex'
-import { activityDetailApi } from '@/api/service'
+import { activityDetailApi, addCollect, cancleCollect } from '@/api/service'
 export default {
   data () {
     return {
       matchStatus: 0,
+      collectStatus: 0,
       activityId: this.$route.params.id,
       baseImgUrl: config.qiniu.IMG_PATH,
       activity: {
@@ -504,32 +510,48 @@ export default {
     }
   },
   mounted () {
-    this.getUserMemberId()
     this.initData()
   },
   computed: {
-    ...mapState([
-      'memberId'
-    ]),
     memberCount () {
       return this.activity.activityMemberList.length || '0'
     }
   },
   methods: {
-    ...mapActions([
-      'getUserMemberId'
-    ]),
     async initData () {
       await activityDetailApi({
-        activityId: this.$route.params.id,
-        memberId: this.memberId
+        activityId: this.$route.params.id
       }).then(res => {
         if (res.status === 200) {
-          console.log(res.data)
           this.activity = res.data.activity
           this.activityMoodList = res.data.activityMoodList
-          this.matchStatus = 0
-          // this.matchStatus = res.data.matchStatus
+          this.matchStatus = res.data.matchStatus
+          this.collectStatus = res.data.collectStatus
+        }
+      })
+    },
+    collect () {
+      addCollect({
+        type: '0',
+        activityId: this.activity.id
+      }).then(res => {
+        if (res.data.code === '200') {
+          this.collectStatus = !this.collectStatus
+          this.$Message.success('收藏成功！')
+        } else {
+          this.$Message.warning(res.data.message)
+        }
+      })
+    },
+    cancleCollect () {
+      cancleCollect({
+        collectIds: this.activity.id
+      }).then(res => {
+        if (res.data.code === '200') {
+          this.collectStatus = !this.collectStatus
+          this.$Message.success('已取消收藏！')
+        } else {
+          this.$Message.warning(res.data.message)
         }
       })
     },

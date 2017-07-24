@@ -4,7 +4,7 @@ const ajaxUrl = Env === 'development'
   ? 'http://zhimei.com/api/wechat'
   : Env === 'production'
   ? 'http://liling.wmeimob.com/api/wechat'
-  : 'https://debug.url.com'
+  : 'http://zhimei.com/local/wechat'
 
 const loginUrl = 'http://liling.wmeimob.com'
 

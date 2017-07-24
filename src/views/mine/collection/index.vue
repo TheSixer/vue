@@ -37,7 +37,7 @@
                         <img src="../../../assets/images/time.png">
                         <span>{{ item.beginDate | moment('YYYY/MM/DD') }}~{{ item.endDate | moment('YYYY/MM/DD') }}</span>
                       </div>
-                      <div class="a-address">
+                      <div class="a-address" v-if="item.address">
                         <img src="../../../assets/images/position.png">
                         <span>{{ item.address }}</span>
                       </div>
@@ -264,11 +264,12 @@
 
 <script>
 import Heade from '@/components/wordHeader/wordHeader'
-import { mapState, mapActions } from 'vuex'
+import config from '@/config/config'
 import { myCollect } from '@/api/service'
 export default {
   data () {
     return {
+      baseImgUrl: config.qiniu.IMG_PATH,
       goodsList: [],
       activityList: []
     }
@@ -276,23 +277,12 @@ export default {
   components: {
     Heade
   },
-  computed: {
-    ...mapState([
-      'memberId'
-    ])
-  },
   mounted () {
-    this.getUserMemberId()
     this.initData()
   },
   methods: {
-    ...mapActions([
-      'getUserMemberId'
-    ]),
     async initData () {
-      await myCollect({
-        memberId: this.memberId
-      }).then(res => {
+      await myCollect({}).then(res => {
         if (res.data.code === '200') {
           this.activityList = res.data.activityList
           this.goodsList = res.data.goodsList
