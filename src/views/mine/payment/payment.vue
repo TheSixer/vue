@@ -133,7 +133,7 @@
           align-items: center;
           padding:0 20 / @pxtorem;
           border-bottom: 1px solid #eaeaea;
-
+          font-size: 28 / @pxtorem;
         }
       }
       .add-btn{
