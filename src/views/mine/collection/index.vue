@@ -1,7 +1,6 @@
 <template>
     <div class="collection">
         <Heade title="我的收藏"></Heade>
-
         <Tabs value="name1">
           <Tab-pane label="活动" name="name1">
             <template v-if="activityList.length">
@@ -20,7 +19,6 @@
                         <template v-else>
                           <img class="status" src="../../../assets/images/over.png">
                         </template>
-
                         <div class="act-info">
                           <div class="num">
                             <div class="count">

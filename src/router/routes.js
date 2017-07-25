@@ -30,7 +30,10 @@ const commodityDetail = r => require.ensure([], () => r(require('@/views/easySho
 const payanother = r => require.ensure([], () => r(require('@/views/mine/payanother/payanother')), 'payanother')
 const servicestore = r => require.ensure([], () => r(require('@/views/mine/servicestore/servicestore')), 'servicestore')
 const payment = r => require.ensure([], () => r(require('@/views/mine/payment/payment')), 'payment')
-
+const choosepay = r => require.ensure([], () => r(require('@/views/mine/choosepay/index')), 'choosepay')
+const firmorder = r => require.ensure([], () => r(require('@/views/mine/firmorder/index')), 'firmorder')
+const detail = r => require.ensure([], () => r(require('@/views/mine/detail/detail')), 'detail')
+const articledetails = r => require.ensure([], () => r(require('@/views/mine/articledetails/articledetails')), 'articledetails')
 export default [{
   path: '',
   meta: {
@@ -199,4 +202,29 @@ export default [{
     title: 'payment'
   },
   component: payment
+}, {
+  path: '/choosepay',
+  meta: {
+    title: '选择代付人'
+  },
+  component: choosepay
+}, {
+  path: '/firmorder',
+  meta: {
+    title: '确认订单'
+  },
+  component: firmorder
+}, {
+  path: '/detail',
+  meta: {
+    title: '商品详情'
+  },
+  component: detail
+}, {
+  path: '/articledetails',
+  meta: {
+    title: 'articledetails'
+  },
+  component: articledetails
 }]
+
