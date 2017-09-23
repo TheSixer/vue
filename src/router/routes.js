@@ -3,6 +3,8 @@ const home = r => require.ensure([], () => r(require('@/views/home/index')), 'ho
 
 const wechatLogin = r => require.ensure([], () => r(require('@/views/wechat-login/index')), 'wechatLogin')
 
+const ming = r => require.ensure([], () => r(require('@/views/mingyigui/index')), 'ming')
+
 const bind = r => require.ensure([], () => r(require('@/views/bind/index')), 'bind')
 const kongquehui = r => require.ensure([], () => r(require('@/views/kongquehui/index')), 'kongquehui')
 const enroll = r => require.ensure([], () => r(require('@/views/kongquehui/enroll/index')), 'enroll')
@@ -46,6 +48,12 @@ export default [{
     title: '绑定'
   },
   component: wechatLogin
+}, {
+  path: '/mingyigui',
+  meta: {
+    title: '"名衣柜"开业大酬宾~'
+  },
+  component: ming
 }, {
   path: '/bind',
   meta: {
